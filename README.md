@@ -165,13 +165,13 @@ If you've quarantined files for later examination, you have the option to restor
 
 ## Plugins
 
-To add a right-click, context menu ability to send files and directories to the scanner, install the appropriate plugin. Links to the latest versions are available here: http://dave-theunsub.github.io/clamtk/
+To add a right-click, context menu ability to send files and directories to the scanner, install the appropriate plugin. Links to the latest versions are available here: https://gitlab.com/dave_m/clamtk/wikis/Downloads
 
 Here are the specific pages:
-* For Gnome (Files file manager): https://github.com/dave-theunsub/clamtk-gnome
-* For KDE (Dolphin file manager): https://github.com/dave-theunsub/clamtk-kde
-* For XFCE (Thunar file manager): https://github.com/dave-theunsub/thunar-sendto-clamtk
-* For MATE (Nemo file manager):   https://github.com/dave-theunsub/nemo-sendto-clamtk
+* For Gnome (Files file manager): https://gitlab.com/dave_m/clamtk-gnome
+* For KDE (Dolphin file manager): https://gitlab.com/dave_m/clamtk-kde
+* For XFCE (Thunar file manager): https://gitlab.com/dave_m/thunar-sendto-clamtk
+* For MATE (Nemo file manager):   https://gitlab.com/dave_m/nemo-sendto-clamtk
 
 
 ## Troubleshooting
