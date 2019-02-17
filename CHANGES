@@ -1,0 +1,54 @@
+CHANGELOG for ClamTk:
+
+6.00 - Feb 15 2019
+------------------
+    * On to Gtk3! Thanks to Scott K for kicking me.
+      - For help: https://gitlab.com/dave_m/clamtk/wikis/Home
+      - For source: https://gitlab.com/dave_m/clamtk-gtk3
+
+5.00 - Nov 9 2013
+------------------
+    * Right-click file manager support;
+      uses nautilus-python
+    * Use of Virustotal API; requires perl-JSON
+      and perl-LWP-Protocol-https
+    * Now using Time::Piece instead of Date::Calc;
+      it's a Perl built-in
+    * Now using Digest::SHA (sha256) instead of Digest::MD5
+    * Built-in documentation (requires yelp);
+      currently English only...
+    * Updated language files: German (de), Bulgarian (bg),
+      Galician (gl), Ukrainian (uk), Russian (ru),
+      English (en_UK), Malay (ms), Hebrew (he), Italian (it),
+
+4.00 - Oct 13 2008
+------------------
+	* There are quite a few changes in this release.
+	  Among the most notable is the ability of any user
+	  to maintain their own sig database and update them.
+	  Please see the file "README.4.0" for more
+	* Small fixes to display the correct virus db information
+	* Swedish language file added to Debian and FC3 builds
+
+3.00 - Aug 8 2007
+-----------------
+	* Extended the signature updates time - it's usually needed
+	* Fixed the Russian language file, which is now UTF-8.
+	  Thanks, Vitaly!
+	* Added a line for internal encoding. Thanks, Vitaly!
+	* Added Swedish language file. Thanks, Petter!
+
+2.00 - Jun 11 2005
+------------------
+	* Code change: now using SimpleMenu for menu
+	  generation because... well, it's simpler
+	* Source is now in the form of clamtk-$VERSION.tar.gz
+	* Other minor fixes
+
+1.0
+-------------------
+	* Certain files containing spaces were not being properly scanned
+	* Re-added quarantine scanning, which was accidentally removed
+	* Removed 'version'-check functionality since I'm moving the
+	  project to sourceforge.net. Might be added later
+	* Minor code tweaks
