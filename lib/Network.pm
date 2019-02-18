@@ -32,7 +32,6 @@ sub show_window {
     my $box = Gtk3::VBox->new( FALSE, 5 );
     $eb->add( $box );
 
-    # my $grid = Gtk3::Table->new( 6, 3, FALSE );
     my $grid = Gtk3::Grid->new();
     $box->pack_start( $grid, FALSE, FALSE, 5 );
     $grid->set_column_spacing( 10 );

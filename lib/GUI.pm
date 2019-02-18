@@ -59,7 +59,7 @@ sub start_gui {
     $window->set_position( 'center' );
 
     my $hb = Gtk3::HeaderBar->new;
-    $window->set_titlebar($hb);
+    $window->set_titlebar( $hb );
 
     my $images_dir = ClamTk::App->get_path( 'images' );
     my $pixbuf
@@ -84,14 +84,14 @@ sub start_gui {
     my $button = Gtk3::ToolButton->new( $image, '' );
     $button->set_sensitive( FALSE );
     $button->set_tooltip_text( _( 'ClamTk Virus Scanner' ) );
-    $hb->pack_start($button);
+    $hb->pack_start( $button );
 
-    $hb->set_title(_( 'Virus Scanner' ) );
+    $hb->set_title( _( 'Virus Scanner' ) );
 
     my $separator = Gtk3::SeparatorToolItem->new;
     $separator->set_draw( FALSE );
     $separator->set_expand( TRUE );
-    $hb->pack_end($separator);
+    $hb->pack_end( $separator );
 
     $button = Gtk3::ToolButton->new_from_stock( 'gtk-quit' );
     $button->set_tooltip_text( _( 'Quit' ) );
@@ -100,14 +100,14 @@ sub start_gui {
             Gtk3->main_quit;
         }
     );
-    $hb->pack_end($button);
+    $hb->pack_end( $button );
 
-    $hb->pack_end(Gtk3::SeparatorToolItem->new);
+    $hb->pack_end( Gtk3::SeparatorToolItem->new );
 
     $button = Gtk3::ToolButton->new_from_stock( 'gtk-about' );
     $button->set_tooltip_text( _( 'About' ) );
     $button->signal_connect( clicked => \&about );
-    $hb->pack_end($button);
+    $hb->pack_end( $button );
 
     $box = Gtk3::Box->new( vertical, 0 );
     $top_box->set_homogeneous( FALSE );
@@ -119,7 +119,7 @@ sub start_gui {
     $infobar->add_button( 'gtk-go-back', -5 );
     $infobar->signal_connect( 'response' => \&add_default_view );
     my $label = Gtk3::Label->new( '' );
-    $label->modify_font( Pango::FontDescription->from_string( 'Monospace' ) );
+    $label->modify_font( Pango::FontDescription::from_string( 'Monospace' ) );
     $label->set_use_markup( TRUE );
     $infobar->get_content_area()->add( $label );
     $infobar->grab_focus;
@@ -274,8 +274,7 @@ sub add_config_panels {
     my $theme = Gtk3::IconTheme->new;
     for my $item ( @data ) {
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme->get_default;
-        my $pix = Gtk3::IconTheme->get_default->load_icon(
+        my $pix = Gtk3::IconTheme::get_default->load_icon(
                  $item->{image}, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -341,7 +340,7 @@ sub add_update_panels {
     #<<<
     for my $item ( @data ) {
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme->get_default->load_icon(
+        my $pix = Gtk3::IconTheme::get_default->load_icon(
                 $item->{image}, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -407,7 +406,7 @@ sub add_history_panels {
     #<<<
     for my $item ( @data ) {
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme->get_default->load_icon(
+        my $pix = Gtk3::IconTheme::get_default->load_icon(
                 $item->{image}, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -472,7 +471,7 @@ sub add_analysis_panels {
 
     for my $item ( @scan_data ) {
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme->get_default->load_icon(
+        my $pix = Gtk3::IconTheme::get_default->load_icon(
                 $item->{image}, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -482,7 +481,6 @@ sub add_analysis_panels {
         );
     }
 
-    # What should have been...
     my @data = (
         {   link        => _( 'Analysis' ),
             description => _( "View a file's reputation" ),
@@ -493,7 +491,7 @@ sub add_analysis_panels {
 
     for my $item ( @data ) {
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme->get_default->load_icon(
+        my $pix = Gtk3::IconTheme::get_default->load_icon(
                 $item->{image}, 24, 'use-builtin'
         );
         $liststore->set( $iter,

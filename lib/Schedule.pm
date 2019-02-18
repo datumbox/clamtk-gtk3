@@ -51,7 +51,7 @@ sub show_window {
     $dialog->signal_connect( destroy => sub { Gtk3->main_quit } );
 
     my $hb = Gtk3::HeaderBar->new;
-    $hb->set_title( _('Schedule'));
+    $hb->set_title( _('Scheduler'));
     $hb->set_show_close_button( TRUE );
     $hb->set_decoration_layout( 'menu:close');
 
@@ -65,7 +65,7 @@ sub show_window {
     my $button = Gtk3::ToolButton->new( $image, '' );
     $button->set_sensitive( FALSE );
     $button->set_tooltip_text( _( 'ClamTk Virus Scanner' ) );
-    $hb->pack_start($button, FALSE, FALSE, 0);
+    $hb->pack_start($button);
     $dialog->set_titlebar($hb);
 
     my $ebox = Gtk3::EventBox->new;

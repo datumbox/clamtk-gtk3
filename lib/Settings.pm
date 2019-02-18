@@ -27,23 +27,23 @@ sub show_window {
     my $top_box = Gtk3::EventBox->new;
 
     my $box = Gtk3::Box->new( 'vertical', 0 );
-    $box->set_homogeneous(FALSE);
+    # $box->set_homogeneous(TRUE);
     $top_box->add( $box );
 
     my %prefs = ClamTk::Prefs->get_all_prefs();
 
-    my $grid = Gtk3::Table->new( 6, 1, FALSE );
+    my $grid = Gtk3::Grid->new();
     $box->pack_start( $grid, FALSE, FALSE, 10 );
-    $grid->set_col_spacings( 5 );
-    $grid->set_row_spacings( 5 );
-    $grid->set_homogeneous( TRUE );
+    $grid->set_column_spacing( 10 );
+    $grid->set_column_homogeneous( TRUE );
+    $grid->set_row_spacing( 10 );
+    $grid->set_row_homogeneous( TRUE );
 
     my $option = Gtk3::CheckButton->new_with_label( _( 'Scan for PUAs' ) );
-    # $option->can_focus( FALSE );
     $option->set_tooltip_text(
         _( 'Detect packed binaries, password recovery tools, and more' ) );
     $option->set_active( TRUE ) if ( $prefs{ Thorough } );
-    $grid->attach_defaults( $option, 0, 1, 0, 1 );
+    $grid->attach( $option, 0, 0, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -55,10 +55,9 @@ sub show_window {
 
     $option = Gtk3::CheckButton->new_with_label(
         _( 'Scan files beginning with a dot (.*)' ) );
-    # $option->can_focus( FALSE );
     $option->set_tooltip_text( _( 'Scan files typically hidden from view' ) );
     $option->set_active( TRUE ) if ( $prefs{ ScanHidden } );
-    $grid->attach_defaults( $option, 0, 1, 1, 2 );
+    $grid->attach( $option, 0, 1, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -70,11 +69,10 @@ sub show_window {
 
     $option = Gtk3::CheckButton->new_with_label(
         _( 'Scan files larger than 20 MB' ) );
-    # $option->can_focus( FALSE );
     $option->set_tooltip_text(
         _( 'Scan large files which are typically not examined' ) );
     $option->set_active( TRUE ) if ( $prefs{ SizeLimit } );
-    $grid->attach_defaults( $option, 0, 1, 2, 3 );
+    $grid->attach( $option, 0, 2, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -86,11 +84,10 @@ sub show_window {
 
     $option = Gtk3::CheckButton->new_with_label(
         _( 'Scan directories recursively' ) );
-    # $option->can_focus( FALSE );
     $option->set_tooltip_text(
         _( 'Scan all files and directories within a directory' ) );
     $option->set_active( TRUE ) if ( $prefs{ Recursive } );
-    $grid->attach_defaults( $option, 0, 1, 3, 4 );
+    $grid->attach( $option, 0, 3, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -102,11 +99,10 @@ sub show_window {
 
     $option = Gtk3::CheckButton->new_with_label(
         _( 'Check for updates to this program' ) );
-    # $option->can_focus( FALSE );
     $option->set_tooltip_text(
         _( 'Check online for application and signature updates' ) );
     $option->set_active( TRUE ) if ( $prefs{ GUICheck } );
-    $grid->attach_defaults( $option, 0, 1, 4, 5 );
+    $grid->attach( $option, 0, 4, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;

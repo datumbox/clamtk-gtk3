@@ -112,7 +112,6 @@ sub show_window {
     #<<<
     $infobar->signal_connect(
         response => sub {
-                # update_store();
                 update_signatures();
         }
     );
@@ -136,9 +135,9 @@ sub get_remote_TK_version {
 
     my $ua = add_ua_proxy();
 
-    Gtk3::main_iteration while Gtk3::events_pending;
+    # Gtk3::main_iteration while Gtk3::events_pending;
     my $response = $ua->get( $url );
-    Gtk3::main_iteration while Gtk3::events_pending;
+    # Gtk3::main_iteration while Gtk3::events_pending;
 
     if ( $response->is_success ) {
         my $content = $response->content;
@@ -198,20 +197,19 @@ sub update_signatures {
 
         if ( $line =~ /^Downloading daily-(\d+)/ ) {
             my $new_daily = $1;
-            Gtk3::main_iteration while Gtk3::events_pending;
+            # Gtk3::main_iteration while Gtk3::events_pending;
 
             $liststore->set( $iter_hash, 0, _( 'Antivirus signatures' ),
                 1, $new_daily, );
 
         } elsif ( $line =~ /Database updated/ ) {
-            Gtk3::main_iteration while Gtk3::events_pending;
+            # Gtk3::main_iteration while Gtk3::events_pending;
             $pb->set_fraction( 1.0 );
-            Gtk3::main_iteration while Gtk3::events_pending;
+            # Gtk3::main_iteration while Gtk3::events_pending;
         } else {
             # warn "skipping line: >$line<\n";
             next;
         }
-        Gtk3::main_iteration while Gtk3::events_pending;
     }
     # Get local information. It would probably be okay to just
     # keep the same number we saw during the update, but this
@@ -225,8 +223,8 @@ sub update_signatures {
     $pb->set_text( _( 'Complete' ) );
 
     # Update infobar type and text; remove button
-    Gtk3::main_iteration while Gtk3::events_pending;
-    set_infobar_text( 'info', '' );
+    # Gtk3::main_iteration while Gtk3::events_pending;
+    set_infobar_text( 'info', _('Complete' ) );
     ClamTk::GUI::set_infobar_mode( 'info', '' );
     # $pb->hide;
     # destroy_button();
@@ -262,13 +260,13 @@ sub set_infobar_text {
     $infobar->set_message_type( $type );
 
     for my $child ( $infobar->get_content_area->get_children ) {
-        Gtk3::main_iteration while Gtk3::events_pending;
+        # Gtk3::main_iteration while Gtk3::events_pending;
         if ( $child->isa( 'Gtk3::Label' ) ) {
             $child->set_text( $text );
             $infobar->queue_draw;
         }
     }
-    Gtk3::main_iteration while Gtk3::events_pending;
+    # Gtk3::main_iteration while Gtk3::events_pending;
 }
 
 sub set_infobar_button {
@@ -294,9 +292,9 @@ sub destroy_button {
 }
 
 sub progress_timeout {
-    Gtk3::main_iteration while Gtk3::events_pending;
+    # Gtk3::main_iteration while Gtk3::events_pending;
     $pb->pulse;
-    Gtk3::main_iteration while Gtk3::events_pending;
+    # Gtk3::main_iteration while Gtk3::events_pending;
 
     return TRUE;
 }
