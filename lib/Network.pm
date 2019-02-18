@@ -32,59 +32,54 @@ sub show_window {
     my $box = Gtk3::VBox->new( FALSE, 5 );
     $eb->add( $box );
 
-    my $grid = Gtk3::Table->new( 6, 3, FALSE );
+    # my $grid = Gtk3::Table->new( 6, 3, FALSE );
+    my $grid = Gtk3::Grid->new();
     $box->pack_start( $grid, FALSE, FALSE, 5 );
-    #$grid->set_column_spacing( 10 );
-    $grid->set_col_spacings( 5 );
-    #$grid->set_column_homogeneous( TRUE );
+    $grid->set_column_spacing( 10 );
+    $grid->set_column_homogeneous( TRUE );
 
     my $none_button = Gtk3::RadioButton->new_with_label_from_widget( undef,
         _( 'No proxy' ) );
-    $grid->attach_defaults( $none_button, 0, 1, 0, 1 );
-    # $none_button->can_focus( FALSE );
+    $grid->attach( $none_button, 0, 0, 1, 1 );
 
     my $env_button
         = Gtk3::RadioButton->new_with_label_from_widget( $none_button,
         _( 'Environment settings' ) );
-    $grid->attach_defaults( $env_button, 0, 1, 1, 2 );
-    # $env_button->can_focus( FALSE );
+    $grid->attach( $env_button, 0, 1, 1, 1 );
 
     my $manual_button
         = Gtk3::RadioButton->new_with_label_from_widget( $none_button,
         _( 'Set manually' ) );
-    $grid->attach_defaults( $manual_button, 0, 1, 2, 3 );
-    # $manual_button->can_focus( FALSE );
+    $grid->attach( $manual_button, 0, 2, 1, 1 );
 
     # Proxy host information
     my $label = Gtk3::Label->new( _( 'IP address or host' ) );
-    $grid->attach_defaults( $label, 1, 2, 3, 4 );
+    $grid->attach( $label, 1, 3, 1, 1 );
 
     my $buffer = Gtk3::EntryBuffer->new( undef, 0 );
     my $host_entry = Gtk3::Entry->new_with_buffer( $buffer );
-    $host_entry->set_max_length(63);
-    $grid->attach_defaults( $host_entry, 2, 3, 3, 4 );
-    #$buffer->signal_connect(
-    #    'inserted-text' => sub {
-    #        my ( $entry, $position, $string ) = @_;
-    $host_entry->signal_connect(
-        'insert-text' => sub {
-            my ( $widget, $string, $position ) = @_;
+    $host_entry->set_max_length( 63 );
+    $grid->attach( $host_entry, 2, 3, 1, 1 );
+    $buffer->signal_connect(
+        'inserted-text' => sub {
+            my ( $widget, $pos, $char, $n_chars, $data ) = @_;
+# warn "wid = >$widget<, pos = >$pos<, chars = >$char<, n_chars = >$n_chars<, data = >$data<\n";
 
-            # http://www.ietf.org/rfc/rfc1738.txt
-            if ( $string !~ m#[\w\.\-\+/:\@\#]# ) {
-                #$buffer->delete_text( $position, 1 );
-                $host_entry->signal_stop_emission_by_name( 'insert-text' );
+            # https://datatracker.ietf.org/doc/rfc1738/
+            if ( $char !~ m/[a-z0-9\+\.\-]/i ) {
+                $buffer->delete_text( $pos, 1 );
+                # $buffer->signal_stop_emission_by_name( 'insert-text' );
+                # $host_entry->set_text($char);
             }
-            return;
         }
     );
 
     # Proxy port information
     $label = Gtk3::Label->new( _( 'Port' ) );
-    $grid->attach_defaults( $label, 1, 2, 4, 5 );
+    $grid->attach( $label, 1, 4, 1, 1 );
     my $port_spin = Gtk3::SpinButton->new_with_range( 1, 65535, 1 );
     $port_spin->set_value( 8080 );
-    $grid->attach_defaults( $port_spin, 2, 3, 4, 5 );
+    $grid->attach( $port_spin, 2, 4, 1, 1 );
 
     # Signals for radiobuttons
     $none_button->signal_connect(
@@ -113,10 +108,10 @@ sub show_window {
     );
 
     my $apply_button = Gtk3::Button->new_from_stock( 'gtk-apply' );
-    $grid->attach_defaults( $apply_button, 0, 1, 5, 6 );
+    $grid->attach( $apply_button, 0, 6, 1, 1 );
 
     $proxy_status_image = Gtk3::ToolButton->new_from_stock( 'gtk-yes' );
-    $grid->attach_defaults( $proxy_status_image, 1, 2, 5, 6 );
+    $grid->attach( $proxy_status_image, 1, 6, 1, 1 );
 
     # What does the user have set?
     # 0 = no proxy, 1 = env_proxy and 2 = manual proxy

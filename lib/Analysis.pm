@@ -221,16 +221,16 @@ sub analysis_frame_one {
     $label->set_alignment( 0.0, 0.5 );
     $box->pack_start( $label, FALSE, FALSE, 5 );
 
-    my $grid = Gtk3::Table->new( 1, 3, FALSE );
-    $box->pack_start( $grid, TRUE, TRUE, 5 );
-    $grid->set_col_spacings( 10 );
-    $grid->set_row_spacings( 10 );
-    $grid->set_homogeneous( TRUE );
+    my $grid = Gtk3::Grid->new();
+    $box->pack_start( $grid, FALSE, FALSE, 5 );
+    $grid->set_column_spacing( 10 );
+    $grid->set_column_homogeneous( FALSE );
+    $grid->set_row_spacing( 10 );
+    $grid->set_row_homogeneous( TRUE );
 
     #<<<
     # Declaring this now for setting sensitive/insensitive
     my $button = Gtk3::ToolButton->new_from_stock( 'gtk-find' );
-    #$button->set_sensitive( FALSE );
 
     my $select_button
         = Gtk3::FileChooserButton->new(
@@ -243,18 +243,19 @@ sub analysis_frame_one {
             $select_button->set_filename( $from_scan );
     }
     $button->set_sensitive( TRUE );
+    $select_button->set_hexpand(TRUE);
 
     $select_button->set_current_folder(
         ClamTk::App->get_path( 'directory' )
     );
-    $grid->attach_defaults( $select_button, 0, 1, 0, 1 );
+    $grid->attach( $select_button, 0, 0, 1, 1 );
     #>>>
 
     my $separator = Gtk3::SeparatorToolItem->new;
     $separator->set_draw( FALSE );
-    $grid->attach_defaults( $separator, 1, 2, 0, 1 );
+    $grid->attach( $separator, 1, 0, 1, 1 );
 
-    $grid->attach_defaults( $button, 2, 3, 0, 1 );
+    $grid->attach( $button, 2, 0, 1, 1 );
     $button->set_tooltip_text( _( 'Submit file for analysis' ) );
 
     $button->signal_connect(
@@ -314,16 +315,18 @@ sub analysis_frame_two {
     $label->set_alignment( 0.0, 0.5 );
     $box->pack_start( $label, FALSE, FALSE, 0 );
 
-    my $grid = Gtk3::Table->new( 1, 4, FALSE );
-    $box->pack_start( $grid, TRUE, TRUE, 5 );
-    $grid->set_col_spacings( 10 );
-    $grid->set_row_spacings( 10 );
-    $grid->set_homogeneous( FALSE );
+    my $grid = Gtk3::Grid->new();
+    $box->pack_start( $grid, FALSE, FALSE, 5 );
+    $grid->set_column_spacing( 10 );
+    $grid->set_column_homogeneous( FALSE );
+    $grid->set_row_spacing( 10 );
+    $grid->set_row_homogeneous( TRUE );
 
     $model = Gtk3::ListStore->new( 'Glib::String' );
 
     $combobox = Gtk3::ComboBox->new_with_model( $model );
-    $grid->attach_defaults( $combobox, 0, 1, 0, 1 );
+    $combobox->set_hexpand(TRUE);
+    $grid->attach( $combobox, 0, 0, 1, 1 );
     my $render = Gtk3::CellRendererText->new;
     $combobox->pack_start( $render, TRUE );
     $combobox->add_attribute( $render, text => 0 );
@@ -331,10 +334,10 @@ sub analysis_frame_two {
 
     my $separator = Gtk3::SeparatorToolItem->new;
     $separator->set_draw( FALSE );
-    $grid->attach_defaults( $separator, 1, 2, 0, 1 );
+    $grid->attach( $separator, 1, 0, 1, 1 );
 
     my $button = Gtk3::ToolButton->new_from_stock( 'gtk-index' );
-    $grid->attach_defaults( $button, 2, 3, 0, 1 );
+    $grid->attach( $button, 2, 0, 1, 1 );
     $button->set_tooltip_text( _( 'View file results' ) );
     $button->signal_connect(
         clicked => sub {
@@ -398,7 +401,7 @@ sub analysis_frame_two {
     );
 
     $button = Gtk3::ToolButton->new_from_stock( 'gtk-delete' );
-    $grid->attach_defaults( $button, 3, 4, 0, 1 );
+    $grid->attach( $button, 3, 0, 1, 1 );
     $button->set_tooltip_text( _( 'Delete file results' ) );
     $button->signal_connect(
         clicked => sub {

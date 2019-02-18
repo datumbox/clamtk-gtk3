@@ -1,11 +1,9 @@
 #!/usr/bin/perl
 #
-# ClamTk, copyright (C) 2004-2016 Dave M
+# ClamTk, copyright (C) 2004-2019 Dave M
 #
-# This file is part of ClamTk.
-# https://launchpad.net/clamtk
-# https://github.com/dave-theunsub/clamtk-gtk3
-# https://bitbucket.org/dave_theunsub/clamtk
+# This file is part of ClamTk
+# (https://gitlab.com/dave_m/clamtk-gtk3/).
 #
 # ClamTk is free software; you can redistribute it and/or modify it
 # under the terms of either:
@@ -16,42 +14,37 @@
 # b) the "Artistic License".
 #
 
-use strict;
-use warnings;
+# use strict;
+# use warnings;
 use utf8;
 $| = 1;
 
 use ClamTk::Analysis;
 use ClamTk::App;
-use ClamTk::ApplicationSettings;
 use ClamTk::Assistant;
-use ClamTk::Device;
-use ClamTk::FrontPage;
 use ClamTk::GUI;
 use ClamTk::History;
-use ClamTk::InnerAnalysis;
 use ClamTk::Network;
 use ClamTk::Prefs;
-use ClamTk::Quarantine;
 use ClamTk::Results;
 use ClamTk::Scan;
 use ClamTk::Schedule;
 use ClamTk::Settings;
 use ClamTk::Shortcuts;
-use ClamTk::Tips;
 use ClamTk::Startup;
 use ClamTk::Update;
+use ClamTk::Quarantine;
 use ClamTk::Whitelist;
 
 use Locale::gettext;
 use POSIX 'locale_h';
-use Glib 'TRUE';
 textdomain( 'clamtk' );
 setlocale( LC_ALL, '' );
 bind_textdomain_codeset( 'clamtk', 'UTF-8' );
 
 # Normally this would work...
 # my $arg = $ARGV[0];
+# print "argv = >$_<\n" for(@ARGV);
 #
 # Unfortunately, I don't know how to make python keep a
 # URI with spaces intact.  So....
@@ -73,11 +66,11 @@ if ( $arg eq '//' ) {
 }
 
 # Ensure all the normal directories are created
-# ClamTk::Prefs->structure;
+ClamTk::Prefs->structure;
 
 # Ensure the preferences are normalized
 # Create defaults if they do not exist
-# ClamTk::Prefs->custom_prefs;
+ClamTk::Prefs->custom_prefs;
 
 # If we get no arguments, bring up GUI;
 # otherwise, we're scanning.
@@ -86,7 +79,7 @@ if ( $arg eq '//' ) {
 if ( !$arg or !-e $arg ) {
     ClamTk::GUI->start_gui();
 } else {
-    ClamTk::Scan::scan_gui( $arg, TRUE );
+    ClamTk::Scan->filter( $arg, 1, 'startup' );
 }
 
 # End.
