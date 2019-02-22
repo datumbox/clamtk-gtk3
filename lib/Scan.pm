@@ -38,7 +38,8 @@ my $found_count = 0;    # Scalar number of bad stuff found
 my $num_scanned = 0;    # Overall number of files scanned
 my %dirs_scanned;       # Directories scanned
 
-my $pb;                     # ProgressBar
+my $hb;                 # HeaderBar
+my $pb;                 # ProgressBar
 my $pb_file_counter = 0;    # For ProgressBar
 my $pb_step;                # For ProgressBar
 my $root_scan = FALSE;      # Scanning /
@@ -87,12 +88,20 @@ sub filter {
     }
 
     # Begin popup scanning
-    $window
-        = Gtk3::Dialog->new( undef, undef,
-        [ qw| modal destroy-with-parent no-separator | ],
-        );
+    $window = Gtk3::Dialog->new(
+        undef, undef,
+        [   qw| modal destroy-with-parent no-separator
+                use-header-bar |
+        ],
+    );
     $window->set_deletable( FALSE );
     $window->set_default_size( 450, 80 );
+
+    $hb = Gtk3::HeaderBar->new;
+    $window->set_titlebar( $hb );
+    $hb->set_title( _( 'Please wait...' ) );
+    $hb->set_show_close_button( TRUE );
+    $hb->set_decoration_layout( 'menu:close' );
 
     $window->signal_connect(
         'destroy' => sub {
@@ -363,7 +372,7 @@ sub scan {
     while ( <$SCAN> ) {
         chomp;
         $window->queue_draw;
-    Gtk3::main_iteration while Gtk3::events_pending;
+        Gtk3::main_iteration while Gtk3::events_pending;
 
         # Warning stuff we don't need
         next if ( /^LibClamAV/ );
@@ -494,6 +503,7 @@ sub clean_up {
     destroy_buttons();
     add_closing_buttons();
 
+    $hb->set_title( _( 'Complete' ) );
     my $message = '';
     if ( !$found_count ) {
         $message = _( 'Scanning complete' );

@@ -29,11 +29,11 @@ sub show_window {
     my $eb = Gtk3::EventBox->new;
 
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
     $eb->add( $box );
 
-    my $s_win = Gtk3::ScrolledWindow->new(undef, undef);
-    $s_win->set_vexpand(TRUE);
+    my $s_win = Gtk3::ScrolledWindow->new( undef, undef );
+    $s_win->set_vexpand( TRUE );
     $s_win->set_shadow_type( 'etched-in' );
     $s_win->set_policy( 'automatic', 'automatic' );
     $box->pack_start( $s_win, TRUE, TRUE, 10 );

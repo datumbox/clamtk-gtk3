@@ -1,10 +1,15 @@
 CHANGELOG for ClamTk:
 
-6.00 - Feb 15 2019
+6.00 - Feb 20 2019
 ------------------
     * On to Gtk3! Thanks to Scott K for kicking me.
       - For help: https://gitlab.com/dave_m/clamtk/wikis/Home
       - For source: https://gitlab.com/dave_m/clamtk-gtk3
+      - Closes:
+        ^ Debian 912888: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=912888
+        ^ Gitlab #59: https://gitlab.com/dave_m/clamtk/issues/59
+      - For more information, downloads, GPG key, etc:
+        https://gitlab.com/dave_m/clamtk/wikis/Home
 
 5.00 - Nov 9 2013
 ------------------

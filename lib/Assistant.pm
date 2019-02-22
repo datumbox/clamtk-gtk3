@@ -24,7 +24,7 @@ my $pref;
 
 sub show_window {
     my $box = Gtk3::Box->new( 'vertical', 0 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
     $box->set_border_width( 12 );
 
     # Get current update preference
@@ -39,12 +39,12 @@ sub show_window {
           )
     );
     #>>>
-    my $flabel = Gtk3::Label->new('');
+    my $flabel = Gtk3::Label->new( '' );
     $flabel->set_markup( "<b>" . $label->get_label . "</b>" );
     $flabel->set_alignment( 0.0, 0.5 );
     $box->pack_start( $flabel, FALSE, FALSE, 10 );
 
-    my $bbox = Gtk3::ButtonBox->new('vertical');
+    my $bbox = Gtk3::ButtonBox->new( 'vertical' );
     $bbox->set_layout( 'start' );
     $box->add( $bbox );
 
@@ -96,8 +96,9 @@ sub show_window {
     $infobar->signal_connect(
         response => sub {
             my ( $bar, $sig, undef ) = @_;
+            # Gtk3::main_iteration while Gtk3::events_pending;
             $label->set_text( _( 'Please wait...' ) );
-            if ( save()) {
+            if ( save() ) {
                 set_infobar_text( TRUE, $bar );
             } else {
                 set_infobar_text( FALSE, $bar );
@@ -149,7 +150,6 @@ sub set_infobar_text {
             $child->set_text( _( 'Press Apply to save changes' ) );
         }
     }
-    # Gtk3::main_iteration while Gtk3::events_pending;
 }
 
 sub save {
@@ -172,34 +172,34 @@ sub save {
             {
                 if ( -e "$dir_list/daily.cld" ) {
                     copy( "$dir_list/daily.cld", "$paths/daily.cld" );
-                    if ($!) {
-                        warn "issue daily.cld: $!\n";
+                    if ( $! ) {
+                        warn "issue copying daily.cld: $!\n";
                     }
                     $d = 1;
                 } elsif ( -e "$dir_list/daily.cvd" ) {
                     copy( "$dir_list/daily.cvd", "$paths/daily.cvd" );
-                    if ($!) {
-                        warn "issue daily.cvd: $!\n";
+                    if ( $! ) {
+                        warn "issue copying daily.cvd: $!\n";
                     }
                     $d = 1;
                 }
                 if ( -e "$dir_list/main.cld" ) {
                     copy( "$dir_list/main.cld", "$paths/main.cld" );
-                    if ($!) {
-                        warn "issue main.cld: $!\n";
+                    if ( $! ) {
+                        warn "issue copying main.cld: $!\n";
                     }
                     $m = 1;
                 } elsif ( -e "$dir_list/main.cvd" ) {
                     copy( "$dir_list/main.cvd", "$paths/main.cvd" );
-                    if ($!) {
-                        warn "issue main.cvd: $!\n";
+                    if ( $! ) {
+                        warn "issue copying main.cvd: $!\n";
                     }
                     $m = 1;
                 }
                 if ( -e "$dir_list/bytecode.cld" ) {
                     copy( "$dir_list/bytecode.cld", "$paths/bytecode.cld" );
-                    if ($!) {
-                        warn "issue bytecode: $!\n";
+                    if ( $! ) {
+                        warn "issue copying bytecode: $!\n";
                     }
                 }
                 last if ( $d && $m );

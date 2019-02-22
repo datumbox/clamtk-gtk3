@@ -34,7 +34,7 @@ sub start_gui {
     # Arch Linux, which may solve the issue - or at least stop dying
     # because it's missing an icon :|
     # https://aur.archlinux.org/packages/clamtk/
-    my $theme = Gtk3::IconTheme->get_default;
+    my $theme = Gtk3::IconTheme::get_default;
     $theme->append_search_path( '/usr/share/icons/gnome/24x24/actions' );
     $theme->append_search_path( '/usr/share/icons/gnome/24x24/places' );
     $theme->append_search_path( '/usr/share/icons/gnome/24x24/mimetypes' );
@@ -53,9 +53,7 @@ sub start_gui {
             Gtk3->main_quit;
         }
     );
-    # $window->set_title( _( 'Virus Scanner' ) );
     $window->set_border_width( 5 );
-    #$window->set_default_size( 340, 400 );
     $window->set_position( 'center' );
 
     my $hb = Gtk3::HeaderBar->new;
@@ -65,11 +63,6 @@ sub start_gui {
     my $pixbuf
         = Gtk3::Gdk::Pixbuf->new_from_file_at_size( "$images_dir/clamtk.png",
         24, 24 );
-
-    # if ( -e "$images_dir/clamtk.png" ) {
-    #     my $transparent = $pixbuf->add_alpha( TRUE, 0xff, 0xff, 0xff );
-    #     $hb->pack_start( $transparent );
-    # }
 
     my $eb = Gtk3::EventBox->new;
     $window->add( $eb );
@@ -118,8 +111,8 @@ sub start_gui {
     $top_box->pack_start( $infobar, FALSE, FALSE, 0 );
     $infobar->add_button( 'gtk-go-back', -5 );
     $infobar->signal_connect( 'response' => \&add_default_view );
+
     my $label = Gtk3::Label->new( '' );
-    $label->modify_font( Pango::FontDescription::from_string( 'Monospace' ) );
     $label->set_use_markup( TRUE );
     $infobar->get_content_area()->add( $label );
     $infobar->grab_focus;
@@ -147,6 +140,7 @@ sub start_gui {
 sub startup {
     # Updates available for gui or sigs outdated?
     Gtk3::main_iteration while Gtk3::events_pending;
+
     my $startup_check = ClamTk::Startup->startup_check();
     my ( $message_type, $message );
     if ( $startup_check eq 'both' ) {
@@ -168,10 +162,8 @@ sub startup {
     set_infobar_mode( $message_type, $message );
     $window->queue_draw;
 
-    # $window->resize( 340, 400 );
     $infobar->show;
     $window->queue_draw;
-    Gtk3::main_iteration while Gtk3::events_pending;
 }
 
 sub set_infobar_mode {
@@ -181,8 +173,8 @@ sub set_infobar_mode {
     for my $c ( $infobar->get_content_area->get_children ) {
         if ( $c->isa( 'Gtk3::Label' ) ) {
             # Remove this (?)
-            $c->modify_font(
-                Pango::FontDescription->from_string( 'Monospace' ) );
+            # $c->modify_font(
+            #    Pango::FontDescription->from_string( 'Monospace' ) );
             $c->set_text( $text );
         }
     }
@@ -194,8 +186,8 @@ sub set_infobar_text_remote {
     $infobar->set_message_type( $type );
     for my $c ( $infobar->get_content_area->get_children ) {
         if ( $c->isa( 'Gtk3::Label' ) ) {
-            $c->modify_font(
-                Pango::FontDescription->from_string( 'Monospace' ) );
+            # $c->modify_font(
+            #    Pango::FontDescription->from_string( 'Monospace' ) );
             $c->set_text( $text );
         }
     }
@@ -727,8 +719,8 @@ sub about {
         . ' b) the "Artistic License".';
     $dialog->set_wrap_license( TRUE );
     $dialog->set_position( 'mouse' );
-    $dialog->modify_font(
-        Pango::FontDescription->from_string( 'Monospace' ) );
+    # $dialog->modify_font(
+    #    Pango::FontDescription->from_string( 'Monospace' ) );
 
     my $images_dir = ClamTk::App->get_path( 'images' );
     my $icon       = "$images_dir/clamtk.png";
@@ -741,11 +733,10 @@ sub about {
     $dialog->set_website( 'https://gitlab.com/dave_m/clamtk/wikis/Home' );
     $dialog->set_logo( $pixbuf );
     $dialog->set_translator_credits(
-        'Please see the website for full listing' );
+        'Please see the credits.md for full listing' );
     $dialog->set_copyright( "\x{a9} Dave M 2004 - 2019" );
     $dialog->set_program_name( 'ClamTk' );
     $dialog->set_authors( [ 'Dave M', 'dave.nerd@gmail.com' ] );
-    # $dialog->set_authors( 'Dave M <dave.nerd@gmail.com>' );
     $dialog->set_comments(
         _( 'ClamTk is a graphical front-end for Clam Antivirus' ) );
 

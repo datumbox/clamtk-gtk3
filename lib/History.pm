@@ -24,13 +24,13 @@ use Glib 'TRUE', 'FALSE';
 
 sub show_window {
     my $box = Gtk3::Box->new( vertical, 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
     my $sort = 0;    # 0 = asc, 1 = desc
 
     my $swin = Gtk3::ScrolledWindow->new( undef, undef );
-    $swin->set_policy( 'never', 'automatic' );
-    $swin->set_vexpand(TRUE);
+    $swin->set_policy( 'automatic', 'automatic' );
+    $swin->set_vexpand( TRUE );
     $box->pack_start( $swin, TRUE, TRUE, 0 );
 
     my $store = create_model();
@@ -67,7 +67,7 @@ sub show_window {
         }
     }
 
-    $box->pack_start( Gtk3::Separator->new('vertical'), FALSE, FALSE, 0 );
+    $box->pack_start( Gtk3::Separator->new( 'vertical' ), FALSE, FALSE, 0 );
 
     my $viewbar = Gtk3::Toolbar->new;
     $box->pack_start( $viewbar, FALSE, FALSE, 5 );
@@ -163,14 +163,14 @@ sub view_history {
     $textbuffer->insert_with_tags_by_name( $textbuffer->get_start_iter,
         $text, 'mono' );
 
-    my $scroll_win = Gtk3::ScrolledWindow->new(undef, undef);
-    $scroll_win->set_vexpand(TRUE);
+    my $scroll_win = Gtk3::ScrolledWindow->new( undef, undef );
+    $scroll_win->set_vexpand( TRUE );
     $scroll_win->set_border_width( 5 );
     $scroll_win->set_shadow_type( 'none' );
-    $scroll_win->set_policy( 'never', 'automatic' );
+    $scroll_win->set_policy( 'automatic', 'automatic' );
 
     my $scrollbox = Gtk3::Box->new( 'vertical', 5 );
-    $scrollbox->set_homogeneous(FALSE);
+    $scrollbox->set_homogeneous( FALSE );
     $win->get_content_area->add( $scrollbox );
 
     $scrollbox->pack_start( $scroll_win, TRUE, TRUE, 0 );

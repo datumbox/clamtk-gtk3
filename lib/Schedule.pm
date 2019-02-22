@@ -45,28 +45,27 @@ my ( $defs_apply_btn, $defs_remove_btn );
 sub show_window {
     my $dialog
         = Gtk3::Dialog->new( undef, undef,
-           [ qw|destroy-with-parent use-header-bar |],
-       );
+        [ qw|destroy-with-parent use-header-bar | ],
+        );
     $dialog->signal_connect( close   => sub { $dialog->destroy } );
     $dialog->signal_connect( destroy => sub { Gtk3->main_quit } );
 
     my $hb = Gtk3::HeaderBar->new;
-    $hb->set_title( _('Scheduler'));
+    $hb->set_title( _( 'Scheduler' ) );
     $hb->set_show_close_button( TRUE );
-    $hb->set_decoration_layout( 'menu:close');
+    $hb->set_decoration_layout( 'menu:close' );
 
     my $images_dir = ClamTk::App->get_path( 'images' );
     my $pixbuf
-        = Gtk3::Gdk::Pixbuf->new_from_file_at_size(
-            "$images_dir/clamtk.png", 24, 24
-        );
+        = Gtk3::Gdk::Pixbuf->new_from_file_at_size( "$images_dir/clamtk.png",
+        24, 24 );
     my $image = Gtk3::Image->new;
     $image->set_from_pixbuf( $pixbuf );
     my $button = Gtk3::ToolButton->new( $image, '' );
     $button->set_sensitive( FALSE );
     $button->set_tooltip_text( _( 'ClamTk Virus Scanner' ) );
-    $hb->pack_start($button);
-    $dialog->set_titlebar($hb);
+    $hb->pack_start( $button );
+    $dialog->set_titlebar( $hb );
 
     my $ebox = Gtk3::EventBox->new;
     $dialog->get_content_area->add( $ebox );
@@ -82,7 +81,7 @@ sub show_window {
     my $scan_frame = Gtk3::Frame->new( _( 'Scan' ) );
     $vbox->pack_start( $scan_frame, FALSE, FALSE, 5 );
     my $scan_box = Gtk3::Box->new( 'vertical', 5 );
-    $scan_box->set_homogeneous(FALSE);
+    $scan_box->set_homogeneous( FALSE );
     $scan_frame->add( $scan_box );
 
     my $label = Gtk3::Label->new(
@@ -93,8 +92,8 @@ sub show_window {
         = Gtk3::Label->new( _( 'Set the scan time using a 24 hour clock' ) );
     $scan_box->pack_start( $label, FALSE, FALSE, 5 );
 
-    my $time_hbox = Gtk3::Box->new('horizontal', 5);
-    $scan_box->set_homogeneous(FALSE);
+    my $time_hbox = Gtk3::Box->new( 'horizontal', 5 );
+    $scan_box->set_homogeneous( FALSE );
     $scan_box->pack_start( $time_hbox, FALSE, FALSE, 0 );
 
     $hour_spin_scan = Gtk3::SpinButton->new_with_range( 0, 23, 1 );
@@ -212,11 +211,11 @@ sub show_window {
     $status_frame->add( $status_box );
 
     # By default, put the label in; helps with spacing and what not
-    $scan_status_label = Gtk3::Label->new('');
+    $scan_status_label = Gtk3::Label->new( '' );
     $status_box->pack_start( $scan_status_label, FALSE, FALSE, 0 );
     $scan_status_label->set_text( _( 'A daily scan is scheduled' ) );
 
-    $defs_status_label = Gtk3::Label->new('');
+    $defs_status_label = Gtk3::Label->new( '' );
     $status_box->pack_start( $defs_status_label, FALSE, FALSE, 0 );
     $defs_status_label->set_text(
         _( 'A daily definitions update is scheduled' ) );

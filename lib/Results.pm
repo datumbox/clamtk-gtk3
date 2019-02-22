@@ -33,15 +33,22 @@ binmode( STDOUT, ':utf8' );
 sub show_window {
     my ( $pkg_name, $hash, $parent ) = @_;
 
-    $dialog = Gtk3::Dialog->new( _( 'Results' ), $parent,
-        'destroy-with-parent', );
-    $dialog->set_size_request( 600, 200 );
+    $dialog = Gtk3::Dialog->new( _( 'Results' ),
+        $parent, [ qw| destroy-with-parent use-header-bar | ] );
+    $dialog->set_size_request( 600, 300 );
 
-    my $sbox = Gtk3::Box->new( 'vertical', 0 );
-    $sbox->set_homogeneous(FALSE);
+    my $hb = Gtk3::HeaderBar->new;
+    $hb->set_title( _( 'Results' ) );
+    $hb->set_show_close_button( TRUE );
+    $hb->set_decoration_layout( 'menu:close' );
+    $hb->show();
+    $dialog->set_titlebar( $hb );
+
+    my $sbox = Gtk3::Box->new( 'vertical', 10 );
+    $sbox->set_homogeneous( FALSE );
     # This scrolled window holds the slist
-    my $sw = Gtk3::ScrolledWindow->new(undef, undef);
-    $sw->set_vexpand(TRUE);
+    my $sw = Gtk3::ScrolledWindow->new( undef, undef );
+    $sw->set_vexpand( TRUE );
     $sw->set_shadow_type( 'etched_in' );
     $sw->set_policy( 'automatic', 'automatic' );
     $sbox->pack_start( $sw, TRUE, TRUE, 0 );
@@ -73,9 +80,9 @@ sub show_window {
                 markup => FILE,
     );
     $column->set_sort_column_id( FILE );
-    $column->set_resizable( TRUE );
     $column->set_sizing( 'fixed' );
     $column->set_expand( TRUE );
+    $column->set_resizable( TRUE );
     $tree->append_column( $column );
 
     $column = Gtk3::TreeViewColumn->new_with_attributes(
@@ -84,9 +91,9 @@ sub show_window {
                 markup => STATUS,
     );
     $column->set_sort_column_id( STATUS );
-    $column->set_resizable( TRUE );
     $column->set_sizing( 'fixed' );
     $column->set_expand( TRUE );
+    $column->set_resizable( TRUE );
     $tree->append_column( $column );
 
     $column = Gtk3::TreeViewColumn->new_with_attributes(
@@ -95,10 +102,15 @@ sub show_window {
             markup => ACTION_TAKEN,
     );
     $column->set_sort_column_id( ACTION_TAKEN );
-    $column->set_resizable( TRUE );
     $column->set_sizing( 'fixed' );
     $column->set_expand( TRUE );
+    $column->set_resizable( TRUE );
     $tree->append_column( $column );
+
+    my ($w, undef) = $dialog->get_size();
+    for my $tvc ($tree->get_columns()) {
+        $tvc->set_fixed_width($w / 3)
+    }
 
     #<<<
     my $i = 0;
@@ -118,7 +130,8 @@ sub show_window {
 
     my $hbox = Gtk3::Toolbar->new;
     $hbox->set_style( 'both-horiz' );
-    $sbox->pack_start( $hbox, FALSE, FALSE, 5 );
+    $hbox->set_vexpand( FALSE );
+    $sbox->pack_start( $hbox, FALSE, FALSE, 0 );
 
     my $image = Gtk3::Image->new_from_stock( 'gtk-refresh', 'menu' );
     my $button = Gtk3::ToolButton->new( $image, _( 'Quarantine' ) );
@@ -158,6 +171,7 @@ sub show_window {
     $hbox->insert( $button, -1 );
 
     $sbox->show_all;
+    $sbox->set_vexpand( TRUE );
     $dialog->run;
     $dialog->destroy;
 }

@@ -1,6 +1,6 @@
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/clamtk/Lobby)
 
-This readme file was last updated on 15 February 2019
+This readme file was last updated on 19 February 2019
 
 # Readme for ClamTk
 
@@ -43,6 +43,9 @@ ClamAV:
 
 Gtk2-Perl:
 * http://gtk2-perl.sourceforge.net
+
+Gtk3:
+* https://developer.gnome.org/gtk3/stable/index.html
 
 Virustotal:
 * https://virustotal.com

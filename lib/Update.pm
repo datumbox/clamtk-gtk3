@@ -22,8 +22,8 @@ use LWP::UserAgent;
 use Locale::gettext;
 
 # Keeping these global for easy messaging.
-my $infobar;      # Gtk3::InfoBar for status
-my $pb;           # Gtk3::ProgressBar
+my $infobar;      # InfoBar for status
+my $pb;           # ProgressBar for ... showing progress
 my $liststore;    # Information on current and remote versions
 my $iter_hash;    # Must be global to update sig area
 
@@ -31,10 +31,10 @@ my $updated = 0;
 
 sub show_window {
     my $box = Gtk3::Box->new( vertical, 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
     my $top_box = Gtk3::Box->new( vertical, 5 );
-    $top_box->set_homogeneous(FALSE);
+    $top_box->set_homogeneous( FALSE );
     $box->pack_start( $top_box, TRUE, TRUE, 0 );
 
     my $scrolled = Gtk3::ScrolledWindow->new( undef, undef );
@@ -135,9 +135,7 @@ sub get_remote_TK_version {
 
     my $ua = add_ua_proxy();
 
-    # Gtk3::main_iteration while Gtk3::events_pending;
     my $response = $ua->get( $url );
-    # Gtk3::main_iteration while Gtk3::events_pending;
 
     if ( $response->is_success ) {
         my $content = $response->content;
@@ -167,7 +165,8 @@ sub update_signatures {
     my $update;
     my $update_sig_pid;
     eval {
-        local $SIG{ ALRM } = sub { die "failed updating signatures (timeout)\n" };
+        local $SIG{ ALRM }
+            = sub { die "failed updating signatures (timeout)\n" };
         alarm 100;
 
         $update_sig_pid = open( $update, '-|', "$freshclam --stdout" );
@@ -191,21 +190,18 @@ sub update_signatures {
     # and try to sum it up.
 
     while ( defined( my $line = <$update> ) ) {
-        $pb->set_text( _( 'Downloading...' ) );
         Gtk3::main_iteration while Gtk3::events_pending;
+        $pb->set_text( _( 'Downloading...' ) );
         chomp( $line );
 
         if ( $line =~ /^Downloading daily-(\d+)/ ) {
             my $new_daily = $1;
-            # Gtk3::main_iteration while Gtk3::events_pending;
 
             $liststore->set( $iter_hash, 0, _( 'Antivirus signatures' ),
                 1, $new_daily, );
 
         } elsif ( $line =~ /Database updated/ ) {
-            # Gtk3::main_iteration while Gtk3::events_pending;
             $pb->set_fraction( 1.0 );
-            # Gtk3::main_iteration while Gtk3::events_pending;
         } else {
             # warn "skipping line: >$line<\n";
             next;
@@ -223,8 +219,7 @@ sub update_signatures {
     $pb->set_text( _( 'Complete' ) );
 
     # Update infobar type and text; remove button
-    # Gtk3::main_iteration while Gtk3::events_pending;
-    set_infobar_text( 'info', _('Complete' ) );
+    set_infobar_text( 'info', _( 'Complete' ) );
     ClamTk::GUI::set_infobar_mode( 'info', '' );
     # $pb->hide;
     # destroy_button();
@@ -260,13 +255,11 @@ sub set_infobar_text {
     $infobar->set_message_type( $type );
 
     for my $child ( $infobar->get_content_area->get_children ) {
-        # Gtk3::main_iteration while Gtk3::events_pending;
         if ( $child->isa( 'Gtk3::Label' ) ) {
             $child->set_text( $text );
             $infobar->queue_draw;
         }
     }
-    # Gtk3::main_iteration while Gtk3::events_pending;
 }
 
 sub set_infobar_button {
@@ -292,9 +285,7 @@ sub destroy_button {
 }
 
 sub progress_timeout {
-    # Gtk3::main_iteration while Gtk3::events_pending;
     $pb->pulse;
-    # Gtk3::main_iteration while Gtk3::events_pending;
 
     return TRUE;
 }

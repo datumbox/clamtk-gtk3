@@ -47,10 +47,10 @@ my $from_scan;
 sub show_window {
     ( undef, $from_scan, $parent ) = @_;
     $window = Gtk3::Dialog->new(
-        undef,
-        $parent,
-        [ qw| modal destroy-with-parent no-separator
-           use-header-bar | ],
+        undef, $parent,
+        [   qw| modal destroy-with-parent no-separator
+                use-header-bar |
+        ],
     );
     $window->signal_connect(
         destroy => sub {
@@ -63,25 +63,24 @@ sub show_window {
     $window->set_position( 'mouse' );
 
     my $hb = Gtk3::HeaderBar->new;
-    $hb->set_title( _('Schedule'));
+    $hb->set_title( _( 'Schedule' ) );
     $hb->set_show_close_button( TRUE );
-    $hb->set_decoration_layout( 'menu:close');
+    $hb->set_decoration_layout( 'menu:close' );
 
     my $images_dir = ClamTk::App->get_path( 'images' );
     my $pixbuf
-        = Gtk3::Gdk::Pixbuf->new_from_file_at_size(
-            "$images_dir/clamtk.png", 24, 24
-        );
+        = Gtk3::Gdk::Pixbuf->new_from_file_at_size( "$images_dir/clamtk.png",
+        24, 24 );
     my $image = Gtk3::Image->new;
     $image->set_from_pixbuf( $pixbuf );
     my $button = Gtk3::ToolButton->new( $image, '' );
     $button->set_sensitive( FALSE );
     $button->set_tooltip_text( _( 'ClamTk Virus Scanner' ) );
-    $hb->pack_start($button);
-    $window->set_titlebar($hb);
+    $hb->pack_start( $button );
+    $window->set_titlebar( $hb );
 
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
     $window->get_content_area->add( $box );
 
     $nb = Gtk3::Notebook->new;
@@ -123,9 +122,9 @@ sub show_window {
 sub page_one {
     # Analysis page
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
-    my $separator = Gtk3::Separator->new('horizontal');
+    my $separator = Gtk3::Separator->new( 'horizontal' );
 
     $box->pack_start( analysis_frame_one(), FALSE, FALSE, 5 );
     $box->pack_start( $separator,           FALSE, FALSE, 5 );
@@ -138,7 +137,7 @@ sub page_two {
     # Results page
     my $box = Gtk3::VBox->new( FALSE, 0 );
 
-    my $sw = Gtk3::ScrolledWindow->new(undef, undef);
+    my $sw = Gtk3::ScrolledWindow->new( undef, undef );
     $sw->set_policy( 'never', 'automatic' );
     $box->pack_start( $sw, TRUE, TRUE, 0 );
 
@@ -214,7 +213,7 @@ sub page_two {
 
 sub analysis_frame_one {
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
     my $label
         = Gtk3::Label->new( _( "Check or recheck a file's reputation" ) );
@@ -309,7 +308,7 @@ sub analysis_frame_one {
 
 sub analysis_frame_two {
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
     my $label = Gtk3::Label->new( _( 'View or delete previous results' ) );
     $label->set_alignment( 0.0, 0.5 );
@@ -325,7 +324,7 @@ sub analysis_frame_two {
     $model = Gtk3::ListStore->new( 'Glib::String' );
 
     $combobox = Gtk3::ComboBox->new_with_model( $model );
-    $combobox->set_hexpand(TRUE);
+    $combobox->set_hexpand( TRUE );
     $grid->attach( $combobox, 0, 0, 1, 1 );
     my $render = Gtk3::CellRendererText->new;
     $combobox->pack_start( $render, TRUE );
@@ -343,8 +342,8 @@ sub analysis_frame_two {
         clicked => sub {
             # my $file = $combobox->get_active_text;
             my $iter = $combobox->get_active_iter();
-            return unless ( $model->iter_is_valid($iter) );
-            my $file = $model->get_value($iter, 0);
+            return unless ( $model->iter_is_valid( $iter ) );
+            my $file = $model->get_value( $iter, 0 );
             return unless ( $file );
             my $file_to_use = '';
             my $files       = read_files();

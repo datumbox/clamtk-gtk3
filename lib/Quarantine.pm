@@ -35,11 +35,11 @@ binmode( STDOUT, ':utf8' );
 
 sub show_window {
     my $box = Gtk3::Box->new( 'vertical', 5 );
-    $box->set_homogeneous(FALSE);
+    $box->set_homogeneous( FALSE );
 
     my $sw = Gtk3::ScrolledWindow->new( undef, undef );
-    $sw->set_policy( 'never', 'automatic' );
-    $sw->set_vexpand(TRUE);
+    $sw->set_policy( 'automatic', 'automatic' );
+    $sw->set_vexpand( TRUE );
     $box->pack_start( $sw, TRUE, TRUE, 5 );
 
     #<<<
@@ -58,6 +58,9 @@ sub show_window {
         text => ROW,
     );
     $column->set_sort_column_id( 0 );
+    $column->set_sizing( 'fixed' );
+    $column->set_expand( TRUE );
+    $column->set_resizable( TRUE );
     $view->append_column( $column );
 
     $column = Gtk3::TreeViewColumn->new_with_attributes(
@@ -66,6 +69,9 @@ sub show_window {
         text => FILE,
     );
     $column->set_sort_column_id( 1 );
+    $column->set_sizing( 'fixed' );
+    $column->set_expand( TRUE );
+    $column->set_resizable( TRUE );
     $view->append_column( $column );
     $sw->add( $view );
 
