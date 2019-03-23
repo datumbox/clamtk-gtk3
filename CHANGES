@@ -1,5 +1,13 @@
 CHANGELOG for ClamTk:
 
+6.01 - Feb 20 2019
+------------------
+    * Minor dependencies tweaks.
+      - Gitlab #60: https://gitlab.com/dave_m/clamtk/issues/60
+      - Thanks Tim!
+    * Formatted the README.md file a little better, mostly by just adding
+      some line breaks. Try opening it locally with a program like Okular.
+
 6.00 - Feb 20 2019
 ------------------
     * On to Gtk3! Thanks to Scott K for kicking me.
