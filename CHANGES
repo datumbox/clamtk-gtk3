@@ -1,12 +1,14 @@
 CHANGELOG for ClamTk:
 
-6.01 - Feb 20 2019
+6.01 - Mar 29 2019
 ------------------
     * Minor dependencies tweaks.
       - Gitlab #60: https://gitlab.com/dave_m/clamtk/issues/60
       - Thanks Tim!
     * Formatted the README.md file a little better, mostly by just adding
       some line breaks. Try opening it locally with a program like Okular.
+    * Re-added whitelist to scheduled scans. Remember to remove your current scan and reschedule if you need this.
+      - Github #115: https://github.com/dave-theunsub/clamtk/issues/115
 
 6.00 - Feb 20 2019
 ------------------
