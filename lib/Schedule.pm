@@ -353,6 +353,24 @@ sub apply_scan {
         $full_cmd .= " --exclude-dir=$m";
     }
 
+# Now strip whitelisted directories
+    for my $ignore (
+        split(
+            /;/,
+            ClamTk::Prefs->get_preference( 'Whitelist' )
+                . $paths->{ whitelist_dir }
+        )
+        )
+    {
+        # warn "excluding $ignore\n";
+        # --exclude-dir=REGEX  Don't scan directories matching REGEX
+        # Using REGEX is important because users could have some
+        # of the whitelisted domains as part of a directory that
+        # should be scanned.
+        # Github #61 - https://github.com/dave-theunsub/clamtk/issues/61
+        $directive .= " --exclude-dir=^" . quotemeta( $ignore );
+    }
+
     # Ignore mail directories until we can parse stuff
     for my $not_parse (
         qw| .thunderbird        .mozilla-thunderbird
