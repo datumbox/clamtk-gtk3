@@ -1,11 +1,15 @@
 CHANGELOG for ClamTk:
 
-6.02 - XXX XX 2019
--------------------
-    * Updated language files: Indonesian (id)
+6.02 - 20190914
+---------------
+    * Updated language files: Turkish (tr), Kazakh (kk), Swedish (sv),
+      Malay (ms), English (en_AU), Finnish (fi), Spanish (es),
+      French (fr), Hebrew (he), Ukrainian (uk), Indonesian (id), Polish (pl)
+    * UX improvement: Gitlab #80 - Top bar icons inconsistency
+    * Improved README.md formatting; available in html and pdf now as well
 
-6.01 - Mar 29 2019
-------------------
+6.01 - 20190329
+---------------
     * Minor dependencies tweaks.
       - Gitlab #60: https://gitlab.com/dave_m/clamtk/issues/60
       - Thanks Tim!
@@ -14,8 +18,8 @@ CHANGELOG for ClamTk:
     * Re-added whitelist to scheduled scans. Remember to remove your current scan and reschedule if you need this.
       - Github #115: https://github.com/dave-theunsub/clamtk/issues/115
 
-6.00 - Feb 20 2019
-------------------
+6.00 - 20190220
+---------------
     * On to Gtk3! Thanks to Scott K for kicking me.
       - For help: https://gitlab.com/dave_m/clamtk/wikis/Home
       - For source: https://gitlab.com/dave_m/clamtk-gtk3
@@ -25,8 +29,8 @@ CHANGELOG for ClamTk:
       - For more information, downloads, GPG key, etc:
         https://gitlab.com/dave_m/clamtk/wikis/Home
 
-5.00 - Nov 9 2013
-------------------
+5.00 - 20131109
+---------------
     * Right-click file manager support;
       uses nautilus-python
     * Use of Virustotal API; requires perl-JSON
@@ -40,8 +44,8 @@ CHANGELOG for ClamTk:
       Galician (gl), Ukrainian (uk), Russian (ru),
       English (en_UK), Malay (ms), Hebrew (he), Italian (it),
 
-4.00 - Oct 13 2008
-------------------
+4.00 - 20081013
+---------------
 	* There are quite a few changes in this release.
 	  Among the most notable is the ability of any user
 	  to maintain their own sig database and update them.
@@ -49,23 +53,23 @@ CHANGELOG for ClamTk:
 	* Small fixes to display the correct virus db information
 	* Swedish language file added to Debian and FC3 builds
 
-3.00 - Aug 8 2007
------------------
+3.00 - 20070808
+---------------
 	* Extended the signature updates time - it's usually needed
 	* Fixed the Russian language file, which is now UTF-8.
 	  Thanks, Vitaly!
 	* Added a line for internal encoding. Thanks, Vitaly!
 	* Added Swedish language file. Thanks, Petter!
 
-2.00 - Jun 11 2005
-------------------
+2.00 - 20050611
+---------------
 	* Code change: now using SimpleMenu for menu
 	  generation because... well, it's simpler
 	* Source is now in the form of clamtk-$VERSION.tar.gz
 	* Other minor fixes
 
-1.0
--------------------
+1.0 - xxxxxxxx
+--------------
 	* Certain files containing spaces were not being properly scanned
 	* Re-added quarantine scanning, which was accidentally removed
 	* Removed 'version'-check functionality since I'm moving the
