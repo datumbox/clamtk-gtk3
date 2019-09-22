@@ -79,7 +79,8 @@ sub show_window {
     $box->pack_start( $viewbar, FALSE, FALSE, 5 );
     $viewbar->set_style( 'both-horiz' );
 
-    my $button = Gtk3::ToolButton->new_from_stock( 'gtk-undelete' );
+    my $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'edit-undo' );
     $button->set_label( _( 'Restore' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -90,7 +91,9 @@ sub show_window {
     $v_sep->set_expand( TRUE );
     $viewbar->insert( $v_sep, -1 );
 
-    $button = Gtk3::ToolButton->new_from_stock( 'gtk-delete' );
+    $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'edit-delete' );
+    $button->set_label( _( 'Delete' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
     $button->signal_connect( clicked => \&delete, $view );
@@ -133,7 +136,7 @@ sub delete {
     if ( 'ok' eq $message->run ) {
         $message->destroy;
         unlink( $fullname ) or do {
-            warn "unable to delete >$fullname<: $!\n";
+            warn "Unable to delete >$fullname<: $!\n";
             return FALSE;
         };
         $model->clear;
@@ -291,7 +294,6 @@ sub add_hash {
 
     my $restore_path = ClamTk::App->get_path( 'restore' );
     open( my $F, '<:encoding(UTF-8)', $restore_path ) or do {
-    # open( my $F, '<', $restore_path ) or do {
         warn "Can't open restore file for reading: $!\n";
         return FALSE;
     };
@@ -388,7 +390,7 @@ sub get_hash {
     my $slurp = do {
         local $/ = undef;
         open( my $f, '<', $file ) or do {
-            warn "unable to open >$file< for hashing: $!\n";
+            warn "Unable to open >$file< for hashing: $!\n";
             return;
         };
         binmode( $f );

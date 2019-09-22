@@ -55,7 +55,7 @@ sub show_window {
     my $label = Gtk3::Label->new( _( 'IP address or host' ) );
     $grid->attach( $label, 1, 3, 1, 1 );
 
-    my $buffer = Gtk3::EntryBuffer->new( undef, 0 );
+    my $buffer     = Gtk3::EntryBuffer->new( undef, 0 );
     my $host_entry = Gtk3::Entry->new_with_buffer( $buffer );
     $host_entry->set_max_length( 63 );
     $grid->attach( $host_entry, 2, 3, 1, 1 );
@@ -106,10 +106,11 @@ sub show_window {
         }
     );
 
-    my $apply_button = Gtk3::Button->new_from_stock( 'gtk-apply' );
+    my $apply_button = Gtk3::Button->new_from_icon_name( 'document-save', 0 );
+    $apply_button->set_tooltip_text( _( 'Press Apply to save changes' ) );
     $grid->attach( $apply_button, 0, 6, 1, 1 );
 
-    $proxy_status_image = Gtk3::ToolButton->new_from_stock( 'gtk-yes' );
+    $proxy_status_image = Gtk3::Button->new_from_icon_name( 'list-add', 0 );
     $grid->attach( $proxy_status_image, 1, 6, 1, 1 );
 
     # What does the user have set?
@@ -254,11 +255,15 @@ sub proxy_non_block_status {
     my $status  = shift;
     my $message = '';
     if ( $status eq 'yes' ) {
-        $proxy_status_image->set_stock_id( 'gtk-yes' );
+        my $btn = Gtk3::Button->new_from_icon_name( 'emblem-ok', 0 );
+        $btn->set_relief( 'none' );
+        $proxy_status_image->set_image( $btn );
         $message = _( 'Settings saved' );
         $infobar->set_message_type( 'other' );
     } else {
-        $proxy_status_image->set_stock_id( 'gtk-no' );
+        my $btn = Gtk3::Button->new_from_icon_name( 'emblem-important', 0 );
+        $btn->set_relief( 'none' );
+        $proxy_status_image->set_image( $btn );
         $message = _( 'Error' );
         $infobar->set_message_type( 'other' );
     }
@@ -266,7 +271,7 @@ sub proxy_non_block_status {
     $proxy_status_image->show;
     my $loop = Glib::MainLoop->new;
     Glib::Timeout->add(
-        1000,
+        1200,
         sub {
             $loop->quit;
             FALSE;

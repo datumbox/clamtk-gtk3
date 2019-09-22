@@ -133,13 +133,13 @@ sub show_window {
     $hbox->set_vexpand( FALSE );
     $sbox->pack_start( $hbox, FALSE, FALSE, 0 );
 
-    my $image = Gtk3::Image->new_from_stock( 'gtk-refresh', 'menu' );
+    my $image  = Gtk3::Image->new_from_stock( 'gtk-refresh', 'menu' );
     my $button = Gtk3::ToolButton->new( $image, _( 'Quarantine' ) );
     $button->set_is_important( TRUE );
     $hbox->insert( $button, -1 );
     $button->signal_connect( clicked => \&action, $tree );
 
-    $image = Gtk3::Image->new_from_stock( 'gtk-delete', 'menu' );
+    $image  = Gtk3::Image->new_from_stock( 'gtk-delete', 'menu' );
     $button = Gtk3::ToolButton->new( $image, _( 'Delete' ) );
     $button->set_is_important( TRUE );
     $hbox->insert( $button, -1 );
@@ -148,7 +148,7 @@ sub show_window {
     # Testing to see if we can add Analysis button.
     # See ClamTk::Analysis->button_test for more
     if ( ClamTk::Analysis->button_test ) {
-        $image = Gtk3::Image->new_from_stock( 'gtk-find', 'menu' );
+        $image  = Gtk3::Image->new_from_stock( 'gtk-find', 'menu' );
         $button = Gtk3::ToolButton->new( $image, _( 'Analysis' ) );
         $button->set_is_important( TRUE );
         $hbox->insert( $button, -1 );
@@ -160,7 +160,7 @@ sub show_window {
     $sep->set_expand( TRUE );
     $hbox->insert( $sep, -1 );
 
-    $image = Gtk3::Image->new_from_stock( 'gtk-close', 'menu' );
+    $image  = Gtk3::Image->new_from_stock( 'gtk-close', 'menu' );
     $button = Gtk3::ToolButton->new( $image, _( 'Close' ) );
     $button->signal_connect(
         clicked => sub {
@@ -227,7 +227,7 @@ sub action {
         ClamTk::Analysis->show_window( $first_col_value, $dialog );
         return TRUE;
     } else {
-        warn 'unable to ' . $button->get_label . " file >$first_col_value<\n";
+        warn 'Unable to ' . $button->get_label . " file >$first_col_value<\n";
     }
 
     return TRUE;
@@ -260,7 +260,7 @@ sub quarantine {
         # d'oh... so just to make sure, unlink the intended target
         # and THEN return.
         unlink( "$paths/$basename" )
-            or warn "unable to delete tmp file $paths/$basename\n: $!\n";
+            or warn "Unable to delete tmp file $paths/$basename\n: $!\n";
         return FALSE;
     };
 }
@@ -287,7 +287,7 @@ sub delete_file {
         return FALSE;
     }
     unlink( $file ) or do {
-        warn "unable to delete >$file<: $!\n";
+        warn "Unable to delete >$file<: $!\n";
         return FALSE;
     };
 
@@ -347,7 +347,7 @@ sub get_hash {
     my $slurp = do {
         local $/ = undef;
         open( my $f, ' < ', $file ) or do {
-            warn "unable to open >$file<: $!\n";
+            warn "Unable to open >$file<: $!\n";
             return;
         };
         binmode( $f );

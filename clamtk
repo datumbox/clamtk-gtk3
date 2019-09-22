@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # ClamTk, copyright (C) 2004-2019 Dave M
 #
@@ -36,20 +36,19 @@ use ClamTk::Update;
 use ClamTk::Quarantine;
 use ClamTk::Whitelist;
 
+use Encode 'decode';
 use Locale::gettext;
 use POSIX 'locale_h';
 textdomain( 'clamtk' );
 setlocale( LC_ALL, '' );
 bind_textdomain_codeset( 'clamtk', 'UTF-8' );
 
-# Normally this would work...
-# my $arg = $ARGV[0];
-# print "argv = >$_<\n" for(@ARGV);
+my $arg = decode('utf8', $ARGV[0]);
 #
 # Unfortunately, I don't know how to make python keep a
 # URI with spaces intact.  So....
-my $arg = '';
-$arg = join( ' ', @ARGV );
+# my $arg = '';
+# $arg = join( ' ', @ARGV );
 
 # Might be in the Trash
 # // = entire directory

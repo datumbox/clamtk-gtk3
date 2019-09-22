@@ -121,13 +121,15 @@ sub show_window {
     $dsep->set_expand( TRUE );
     $time_bar->insert( $dsep, -1 );
 
-    $scan_apply_btn = Gtk3::ToolButton->new_from_stock( 'gtk-add' );
+    $scan_apply_btn = Gtk3::ToolButton->new();
+    $scan_apply_btn->set_icon_name( 'list-add' );
     $time_bar->insert( $scan_apply_btn, -1 );
     $scan_apply_btn->signal_connect( 'clicked' => \&apply_scan );
 
     $time_bar->insert( Gtk3::SeparatorToolItem->new, -1 );
 
-    $scan_remove_btn = Gtk3::ToolButton->new_from_stock( 'gtk-remove' );
+    $scan_remove_btn = Gtk3::ToolButton->new();
+    $scan_remove_btn->set_icon_name( 'list-remove' );
     $time_bar->insert( $scan_remove_btn, -1 );
     $scan_remove_btn->signal_connect(
         'clicked' => sub {
@@ -184,7 +186,9 @@ sub show_window {
         ? FALSE
         : TRUE;
 
-    $defs_apply_btn = Gtk3::ToolButton->new_from_stock( 'gtk-add' );
+    $defs_apply_btn = Gtk3::ToolButton->new();
+    $defs_apply_btn->set_icon_name( 'emblem-new' );
+    $defs_apply_btn->set_label( _( 'Close' ) );
     if ( $can_update ) {
         $defs_bar->insert( $defs_apply_btn, -1 );
         $defs_apply_btn->signal_connect( 'clicked' => \&apply_defs );
@@ -192,7 +196,9 @@ sub show_window {
 
     $defs_bar->insert( Gtk3::SeparatorToolItem->new, -1 );
 
-    $defs_remove_btn = Gtk3::ToolButton->new_from_stock( 'gtk-remove' );
+    $defs_remove_btn = Gtk3::ToolButton->new();
+    $defs_remove_btn->set_icon_name( 'list-remove' );
+    $defs_remove_btn->set_label( _( 'Delete' ) );
     $defs_bar->insert( $defs_remove_btn, -1 );
     $defs_remove_btn->signal_connect(
         'clicked' => sub {
@@ -229,7 +235,9 @@ sub show_window {
     $dsep->set_expand( TRUE );
     $end_bar->insert( $dsep, -1 );
 
-    my $btn = Gtk3::ToolButton->new_from_stock( 'gtk-close' );
+    my $btn = Gtk3::ToolButton->new();
+    $btn->set_icon_name( 'window-close' );
+    $btn->set_label( _( 'Close' ) );
     $btn->set_is_important( TRUE );
     $end_bar->insert( $btn, -1 );
     $btn->signal_connect( 'clicked' => sub { $dialog->destroy } );
@@ -353,7 +361,7 @@ sub apply_scan {
         $full_cmd .= " --exclude-dir=$m";
     }
 
-# Now strip whitelisted directories
+    # Now strip whitelisted directories
     for my $ignore (
         split(
             /;/,

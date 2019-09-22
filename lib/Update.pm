@@ -151,7 +151,6 @@ sub get_remote_TK_version {
 sub update_signatures {
     $pb->{ timer } = Glib::Timeout->add( 100, \&progress_timeout, $pb );
     $pb->show;
-    #$pb->set_show_text( TRUE );
     $pb->set_text( _( 'Please wait...' ) );
 
     my $freshclam = get_freshclam_path();

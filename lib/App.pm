@@ -25,7 +25,7 @@ use Encode 'decode';
 
 sub get_TK_version {
     # Stick with %.2f format - 4.50 vice 4.5
-    return '6.01';
+    return '6.02';
 }
 
 sub get_path {
@@ -334,7 +334,7 @@ sub get_sigtool_info {
         $regex = qr|Signatures: (\d+)|;
     }
 
-    my $result = '';
+    my $result  = '';
     my $sigtool = get_path( undef, 'sigtool' );
 
     my $daily_path = get_daily_sigs_path();

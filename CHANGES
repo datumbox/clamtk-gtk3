@@ -1,14 +1,18 @@
 CHANGELOG for ClamTk:
 
-6.02 - 20190914
+6.02 - 20190919
 ---------------
     * Updated language files: Turkish (tr), Kazakh (kk), Swedish (sv),
       Malay (ms), English (en_AU), Finnish (fi), Spanish (es),
-      French (fr), Hebrew (he), Ukrainian (uk), Indonesian (id), Polish (pl)
+      French (fr), Hebrew (he), Ukrainian (uk), Indonesian (id),
+      Polish (pl), German (de), Asturian (ast), Italian (it)
     * UX improvement: Gitlab #80 - Top bar icons inconsistency
     * Regression bug: Gitlab #83 - support for file name or folder
       name with local charset in command line interface parameter
-    * Improved README.md formatting; available in html and pdf now as well
+    * Gitlab Merge Request !1 - Fix the hashbang and icon names
+      (started; will finish in 6.03)
+    * Improved README.md formatting; available in html and pdf
+      now as well
 
 6.01 - 20190329
 ---------------

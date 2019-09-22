@@ -105,7 +105,8 @@ sub show_window {
     $bar = Gtk3::InfoBar->new;
     $box->pack_start( $bar, FALSE, FALSE, 0 );
     $bar->set_message_type( 'other' );
-    $bar->add_button( 'gtk-close', -7 );
+    # $bar->add_button( 'gtk-close', -7 );
+    $bar->add_button( _( 'Close' ), -7 );
     $bar->signal_connect(
         response => sub {
             $submitted = 0;
@@ -198,8 +199,10 @@ sub page_two {
     $separator->set_expand( TRUE );
     $toolbar->insert( $separator, -1 );
 
-    my $button = Gtk3::ToolButton->new_from_stock( 'gtk-save-as' );
-    $button->set_tooltip_text( _( 'Save results' ) );
+    my $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'document-save-as' );
+    $button->set_label( _( 'Save results' ) );
+    # $button->set_tooltip_text( _( 'Save results' ) );
     $toolbar->insert( $button, -1 );
     $button->signal_connect(
         clicked => sub {
@@ -229,7 +232,8 @@ sub analysis_frame_one {
 
     #<<<
     # Declaring this now for setting sensitive/insensitive
-    my $button = Gtk3::ToolButton->new_from_stock( 'gtk-find' );
+    my $button = Gtk3::ToolButton->new();
+    $button->set_icon_name('edit-select');
 
     my $select_button
         = Gtk3::FileChooserButton->new(
@@ -267,7 +271,7 @@ sub analysis_frame_one {
             # VT size limit using the API is 32MB
             # https://www.virustotal.com/en/faq/
             my $size = -s $filename;
-            my $mb = $size / ( 1024 * 1024 );
+            my $mb   = $size / ( 1024 * 1024 );
             if ( $mb > 32 ) {
                 warn "filesize too large - must be smaller than 32MB\n";
                 popup( _( 'Uploaded files must be smaller than 32MB' ) );
@@ -335,9 +339,10 @@ sub analysis_frame_two {
     $separator->set_draw( FALSE );
     $grid->attach( $separator, 1, 0, 1, 1 );
 
-    my $button = Gtk3::ToolButton->new_from_stock( 'gtk-index' );
-    $grid->attach( $button, 2, 0, 1, 1 );
+    my $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'text-x-preview' );
     $button->set_tooltip_text( _( 'View file results' ) );
+    $grid->attach( $button, 2, 0, 1, 1 );
     $button->signal_connect(
         clicked => sub {
             # my $file = $combobox->get_active_text;
@@ -358,12 +363,12 @@ sub analysis_frame_two {
             # For some reason, we'll use csv files
             my $csv = Text::CSV->new( { binary => 1, eol => "\n" } )
                 or do {
-                warn "unable to begin Text::CSV: $!\n";
+                warn "Unable to begin Text::CSV: $!\n";
                 return;
                 };
 
             open( my $f, '<:encoding(utf8)', $file_to_use ) or do {
-                warn "unable to opening VT CSV file: $!\n";
+                warn "Unable to opening VT CSV file: $!\n";
                 # popup( _( 'Error opening VT CSV file' ) );
                 return;
             };
@@ -399,9 +404,10 @@ sub analysis_frame_two {
         }
     );
 
-    $button = Gtk3::ToolButton->new_from_stock( 'gtk-delete' );
-    $grid->attach( $button, 3, 0, 1, 1 );
+    $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'edit-delete' );
     $button->set_tooltip_text( _( 'Delete file results' ) );
+    $grid->attach( $button, 3, 0, 1, 1 );
     $button->signal_connect(
         clicked => sub {
             my $file = $combobox->get_active_text;
@@ -418,7 +424,7 @@ sub analysis_frame_two {
                     $file_to_use = $key->{ readpath };
                     if ( -e $file_to_use ) {
                         unlink( $file_to_use ) or do {
-                            warn "unable to delete VT $file_to_use: $!\n";
+                            warn "Unable to delete VT $file_to_use: $!\n";
                             return;
                         };
                         $combobox->set_active( -1 );
@@ -450,7 +456,7 @@ sub read_files {
         $results->[ $arr_count ]->{ readpath } = $f;
         $results->[ $arr_count ]->{ hash }     = basename( $f );
         open( my $t, '<:encoding(utf8)', $f ) or do {
-            warn "unable to open analysis file >$f<: $!\n";
+            warn "Unable to open analysis file >$f<: $!\n";
             next;
         };
         while ( <$t> ) {
@@ -602,7 +608,7 @@ sub submit_new {
         my $json_hash = decode_json( $json_text );
 
         open( my $f, '>>:encoding(UTF-8)', $file );
-        # or warn "unable to save virustotal results: $!\n";
+        # or warn "Unable to save virustotal results: $!\n";
         my $csv = Text::CSV->new( { binary => 1, eol => "\n" } );
         my $ref;
         $ref->[ 0 ] = [ $filename, $hash, $json_hash->{ permalink } ];
@@ -637,7 +643,7 @@ sub get_hash {
     my $slurp = do {
         local $/ = undef;
         open( my $f, '<', $file ) or do {
-            warn "unable to open >$file< for hashing: $!\n";
+            warn "Unable to open >$file< for hashing: $!\n";
             return;
         };
         binmode( $f );

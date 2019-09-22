@@ -73,7 +73,8 @@ sub show_window {
     $box->pack_start( $viewbar, FALSE, FALSE, 5 );
     $viewbar->set_style( 'both-horiz' );
 
-    my $button = Gtk3::ToolButton->new_from_stock( 'gtk-select-all' );
+    my $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'text-x-preview' );
     $button->set_label( _( 'View' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -84,7 +85,9 @@ sub show_window {
     $v_sep->set_expand( TRUE );
     $viewbar->insert( $v_sep, -1 );
 
-    $button = Gtk3::ToolButton->new_from_stock( 'gtk-delete' );
+    $button = Gtk3::ToolButton->new();
+    $button->set_icon_name( 'edit-delete' );
+    $button->set_label( _( 'Delete' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
     $button->signal_connect( clicked => \&del_history, $view );
@@ -185,7 +188,9 @@ sub view_history {
     $v_sep->set_expand( TRUE );
     $viewbar->insert( $v_sep, -1 );
 
-    my $close_btn = Gtk3::ToolButton->new_from_stock( 'gtk-close' );
+    my $close_btn = Gtk3::ToolButton->new();
+    $close_btn->set_icon_name( 'window-close' );
+    $close_btn->set_label( _( 'Close' ) );
     $close_btn->set_is_important( TRUE );
     $viewbar->insert( $close_btn, -1 );
     $close_btn->signal_connect( clicked => sub { $win->destroy } );
@@ -203,7 +208,7 @@ sub del_history {
     my ( $model, $iter ) = $sel->get_selected;
     return unless $iter;
 
-    my $row = $model->get( $iter, 0 );
+    my $row        = $model->get( $iter, 0 );
     my $first_iter = $model->get_iter_first;
     # my $next_iter  = $model->iter_next($iter);
     my $new_path = $model->get_path( $iter );

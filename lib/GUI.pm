@@ -53,58 +53,31 @@ sub start_gui {
             Gtk3->main_quit;
         }
     );
-    $window->set_border_width( 5 );
+    $window->set_border_width( 3 );
     $window->set_position( 'center' );
 
     my $hb = Gtk3::HeaderBar->new;
     $window->set_titlebar( $hb );
 
-    my $images_dir = ClamTk::App->get_path( 'images' );
-    my $pixbuf
-        = Gtk3::Gdk::Pixbuf->new_from_file_at_size( "$images_dir/clamtk.png",
-        24, 24 );
-
     my $eb = Gtk3::EventBox->new;
     $window->add( $eb );
 
-    $top_box = Gtk3::Box->new( vertical, 5 );
+    $top_box = Gtk3::Box->new( vertical, 3 );
     $top_box->set_homogeneous( FALSE );
     $eb->add( $top_box );
 
-    my $image = Gtk3::Image->new;
-    $image->set_from_pixbuf( $pixbuf );
-
-    my $button = Gtk3::ToolButton->new( $image, '' );
-    $button->set_sensitive( FALSE );
-    $button->set_tooltip_text( _( 'ClamTk Virus Scanner' ) );
-    $hb->pack_start( $button );
-
     $hb->set_title( _( 'Virus Scanner' ) );
+    $hb->set_decoration_layout( 'menu:minimize,close' );
+    $hb->set_show_close_button( TRUE );
 
     my $separator = Gtk3::SeparatorToolItem->new;
     $separator->set_draw( FALSE );
     $separator->set_expand( TRUE );
     $hb->pack_end( $separator );
 
-    $button = Gtk3::ToolButton->new_from_stock( 'gtk-quit' );
-    $button->set_tooltip_text( _( 'Quit' ) );
-    $button->signal_connect(
-        clicked => sub {
-            Gtk3->main_quit;
-        }
-    );
-    $hb->pack_end( $button );
-
-    $hb->pack_end( Gtk3::SeparatorToolItem->new );
-
-    $button = Gtk3::ToolButton->new_from_stock( 'gtk-about' );
-    $button->set_tooltip_text( _( 'About' ) );
-    $button->signal_connect( clicked => \&about );
-    $hb->pack_end( $button );
-
     $box = Gtk3::Box->new( vertical, 0 );
     $top_box->set_homogeneous( FALSE );
-    $box->set_border_width( 5 );
+    $box->set_border_width( 3 );
     $top_box->add( $box );
 
     $infobar = Gtk3::InfoBar->new;
@@ -197,7 +170,6 @@ sub add_configuration {
     my $show_this = shift;
 
     my $label = Gtk3::Label->new;
-  # $label->modify_font( Pango::FontDescription->from_string( 'Monospace' ) );
     $label->set_markup( "<b>$show_this</b>" );
     $label->set_alignment( 0.01, 0.5 );
 
@@ -247,17 +219,17 @@ sub add_config_panels {
         },
         {   link        => _( 'Whitelist' ),
             description => _( 'View or update scanning whitelist' ),
-            image       => 'gtk-new',
+            image       => 'security-high',
             button      => FALSE,
         },
         {   link        => _( 'Network' ),
             description => _( 'Edit proxy settings' ),
-            image       => 'gtk-network',
+            image       => 'preferences-system-network',
             button      => FALSE,
         },
         {   link        => _( 'Scheduler' ),
             description => _( 'Schedule a scan or signature update' ),
-            image       => 'gtk-properties',
+            image       => 'alarm',
             button      => FALSE,
         },
     );
@@ -319,12 +291,12 @@ sub add_update_panels {
     my @data = (
         {   link        => _( 'Update' ),
             description => _( 'Update antivirus signatures' ),
-            image       => 'gtk-goto-bottom',
+            image       => 'software-update-available',
             button      => FALSE,
         },
         {   link        => _( 'Update Assistant' ),
             description => _( 'Signature update preferences' ),
-            image       => 'gtk-color-picker',
+            image       => 'system-help',
             button      => FALSE,
         },
     );
@@ -385,12 +357,12 @@ sub add_history_panels {
     my @data = (
         {   link        => _( 'History' ),
             description => _( 'View previous scans' ),
-            image       => 'gtk-edit',
+            image       => 'view-list',
             button      => FALSE,
         },
         {   link        => _( 'Quarantine' ),
             description => _( 'Manage quarantined files' ),
-            image       => 'gtk-refresh',
+            image       => 'user-trash-full',
             button      => FALSE,
         },
     );
@@ -451,12 +423,12 @@ sub add_analysis_panels {
     my @scan_data = (
         {   link        => _( 'Scan a file' ),
             description => _( 'Scan a file' ),
-            image       => 'gtk-file',
+            image       => 'document-new',
             button      => FALSE,
         },
         {   link        => _( 'Scan a directory' ),
             description => _( 'Scan a directory' ),
-            image       => 'gtk-directory',
+            image       => 'folder-documents',
             button      => FALSE,
         },
     );
@@ -476,7 +448,7 @@ sub add_analysis_panels {
     my @data = (
         {   link        => _( 'Analysis' ),
             description => _( "View a file's reputation" ),
-            image       => 'gtk-find',
+            image       => 'system-search',
             button      => FALSE,
         },
     );
@@ -501,7 +473,6 @@ sub swap_button {
     my $change_to = shift;
     if ( $change_to ) {
         $infobar->add_button( 'gtk-go-back', -5 );
-        # $infobar->signal_connect( 'response' => \&add_default_view );
         $infobar->signal_connect(
             response => sub {
                 my ( $package, $filename, $line ) = caller;
@@ -530,7 +501,7 @@ sub press {
     my ( $path, $store ) = @_;
     return unless ( $path );
 
-    my $iter = $store->get_iter( $path );
+    my $iter  = $store->get_iter( $path );
     my $value = $store->get_value( $iter, 1 );
 
     iconview_react( $value );
@@ -540,7 +511,7 @@ sub click {
     my ( $view, $path, $model ) = @_;
     $view->unselect_all;
 
-    my $iter = $model->get_iter( $path );
+    my $iter  = $model->get_iter( $path );
     my $value = $model->get_value( $iter, 1 );
 
     iconview_react( $value );
@@ -719,8 +690,6 @@ sub about {
         . ' b) the "Artistic License".';
     $dialog->set_wrap_license( TRUE );
     $dialog->set_position( 'mouse' );
-    # $dialog->modify_font(
-    #    Pango::FontDescription->from_string( 'Monospace' ) );
 
     my $images_dir = ClamTk::App->get_path( 'images' );
     my $icon       = "$images_dir/clamtk.png";
