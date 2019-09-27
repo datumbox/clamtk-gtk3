@@ -115,7 +115,8 @@ sub show_window {
     my $infobar = Gtk3::InfoBar->new;
     #$box->pack_start( $infobar, FALSE, FALSE, 10 );
     $infobar->set_message_type( 'other' );
-    $infobar->add_button( 'gtk-go-back', -7 );
+    my $use_image = ClamTk::Icons->get_image( 'go-previous' );
+    $infobar->add_button( $use_image, -7 );
     $infobar->signal_connect(
         response => sub {
             ClamTk::GUI->swap_button;

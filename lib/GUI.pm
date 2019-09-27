@@ -75,7 +75,14 @@ sub start_gui {
     $separator->set_expand( TRUE );
     $hb->pack_end( $separator );
 
+    my $button = Gtk3::Button->new_from_icon_name( 'help-about', 2 );
+    $button->set_can_focus(FALSE);
+    $hb->pack_end( $button );
+    $button->set_tooltip_text( _( 'About' ) );
+    $button->signal_connect( 'clicked', sub { about() } );
+
     $box = Gtk3::Box->new( vertical, 0 );
+    $box->grab_focus;
     $top_box->set_homogeneous( FALSE );
     $box->set_border_width( 3 );
     $top_box->add( $box );
@@ -145,9 +152,6 @@ sub set_infobar_mode {
     $infobar->set_message_type( $type );
     for my $c ( $infobar->get_content_area->get_children ) {
         if ( $c->isa( 'Gtk3::Label' ) ) {
-            # Remove this (?)
-            # $c->modify_font(
-            #    Pango::FontDescription->from_string( 'Monospace' ) );
             $c->set_text( $text );
         }
     }
@@ -159,8 +163,6 @@ sub set_infobar_text_remote {
     $infobar->set_message_type( $type );
     for my $c ( $infobar->get_content_area->get_children ) {
         if ( $c->isa( 'Gtk3::Label' ) ) {
-            # $c->modify_font(
-            #    Pango::FontDescription->from_string( 'Monospace' ) );
             $c->set_text( $text );
         }
     }
@@ -237,9 +239,10 @@ sub add_config_panels {
     #<<<
     my $theme = Gtk3::IconTheme->new;
     for my $item ( @data ) {
+        my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
         my $pix = Gtk3::IconTheme::get_default->load_icon(
-                 $item->{image}, 24, 'use-builtin'
+            $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
                 0, $pix,
@@ -302,10 +305,12 @@ sub add_update_panels {
     );
 
     #<<<
+    my $theme = Gtk3::IconTheme->new;
     for my $item ( @data ) {
+        my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
         my $pix = Gtk3::IconTheme::get_default->load_icon(
-                $item->{image}, 24, 'use-builtin'
+            $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
                 0, $pix,
@@ -369,9 +374,10 @@ sub add_history_panels {
 
     #<<<
     for my $item ( @data ) {
+        my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
         my $pix = Gtk3::IconTheme::get_default->load_icon(
-                $item->{image}, 24, 'use-builtin'
+            $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
                 0, $pix,
@@ -434,9 +440,10 @@ sub add_analysis_panels {
     );
 
     for my $item ( @scan_data ) {
+        my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
         my $pix = Gtk3::IconTheme::get_default->load_icon(
-                $item->{image}, 24, 'use-builtin'
+                $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
                 0, $pix,
@@ -454,9 +461,10 @@ sub add_analysis_panels {
     );
 
     for my $item ( @data ) {
+        my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
         my $pix = Gtk3::IconTheme::get_default->load_icon(
-                $item->{image}, 24, 'use-builtin'
+                $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
                 0, $pix,
@@ -501,7 +509,7 @@ sub press {
     my ( $path, $store ) = @_;
     return unless ( $path );
 
-    my $iter  = $store->get_iter( $path );
+    my $iter = $store->get_iter( $path );
     my $value = $store->get_value( $iter, 1 );
 
     iconview_react( $value );
@@ -511,7 +519,7 @@ sub click {
     my ( $view, $path, $model ) = @_;
     $view->unselect_all;
 
-    my $iter  = $model->get_iter( $path );
+    my $iter = $model->get_iter( $path );
     my $value = $model->get_value( $iter, 1 );
 
     iconview_react( $value );

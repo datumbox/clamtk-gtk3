@@ -74,7 +74,8 @@ sub show_window {
     $viewbar->set_style( 'both-horiz' );
 
     my $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'text-x-preview' );
+    my $use_image = ClamTk::Icons->get_image('text-x-preview');
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'View' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -86,7 +87,8 @@ sub show_window {
     $viewbar->insert( $v_sep, -1 );
 
     $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'edit-delete' );
+    $use_image = ClamTk::Icons->get_image('edit-delete');
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'Delete' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -189,7 +191,8 @@ sub view_history {
     $viewbar->insert( $v_sep, -1 );
 
     my $close_btn = Gtk3::ToolButton->new();
-    $close_btn->set_icon_name( 'window-close' );
+    my $use_image = ClamTk::Icons->get_image('window-close');
+    $close_btn->set_icon_name( $use_image );
     $close_btn->set_label( _( 'Close' ) );
     $close_btn->set_is_important( TRUE );
     $viewbar->insert( $close_btn, -1 );

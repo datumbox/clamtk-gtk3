@@ -233,7 +233,8 @@ sub analysis_frame_one {
     #<<<
     # Declaring this now for setting sensitive/insensitive
     my $button = Gtk3::ToolButton->new();
-    $button->set_icon_name('edit-select');
+    my $use_image = ClamTk::Icons->get_image('edit-select');
+    $button->set_icon_name($use_image);
 
     my $select_button
         = Gtk3::FileChooserButton->new(

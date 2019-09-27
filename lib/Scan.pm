@@ -165,9 +165,11 @@ sub filter {
     $box->pack_start( $bottombar, FALSE, FALSE, 5 );
 
     $bottombar->set_message_type( 'other' );
-    $bottombar->add_button( 'gtk-cancel', HATE_GNOME_SHELL );
+    $use_image = ClamTk::Icons->get_image( 'process-stop' );
+    $bottombar->add_button( $use_image, HATE_GNOME_SHELL );
     if ( $show ) {
-        $bottombar->add_button( 'gtk-preferences', DESTROY_GNOME_SHELL );
+        $use_image = ClamTk::Icons->get_image( 'preferences-system' );
+        $bottombar->add_button( $use_image, DESTROY_GNOME_SHELL );
     }
     $bottombar->signal_connect(
         response => sub {

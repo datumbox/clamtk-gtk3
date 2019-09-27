@@ -103,7 +103,8 @@ sub show_window {
         $text = _( 'You are configured to automatically receive updates' );
     } else {
         $text = _( 'Check for updates' );
-        $infobar->add_button( 'gtk-ok', -5 );
+        my $use_image = ClamTk::Icons->get_image( 'emblem-ok' );
+        $infobar->add_button( $use_image, -5 );
     }
 
     my $label = Gtk3::Label->new;

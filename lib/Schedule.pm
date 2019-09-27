@@ -122,14 +122,16 @@ sub show_window {
     $time_bar->insert( $dsep, -1 );
 
     $scan_apply_btn = Gtk3::ToolButton->new();
-    $scan_apply_btn->set_icon_name( 'list-add' );
+    my $use_image = ClamTk::Icons->get_image( 'list-add' );
+    $scan_apply_btn->set_icon_name( $use_image );
     $time_bar->insert( $scan_apply_btn, -1 );
     $scan_apply_btn->signal_connect( 'clicked' => \&apply_scan );
 
     $time_bar->insert( Gtk3::SeparatorToolItem->new, -1 );
 
     $scan_remove_btn = Gtk3::ToolButton->new();
-    $scan_remove_btn->set_icon_name( 'list-remove' );
+    $use_image       = ClamTk::Icons->get_image( 'list-remove' );
+    $scan_remove_btn->set_icon_name( $use_image );
     $time_bar->insert( $scan_remove_btn, -1 );
     $scan_remove_btn->signal_connect(
         'clicked' => sub {

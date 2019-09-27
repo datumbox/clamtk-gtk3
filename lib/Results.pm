@@ -133,14 +133,17 @@ sub show_window {
     $hbox->set_vexpand( FALSE );
     $sbox->pack_start( $hbox, FALSE, FALSE, 0 );
 
-    my $image  = Gtk3::Image->new_from_stock( 'gtk-refresh', 'menu' );
-    my $button = Gtk3::ToolButton->new( $image, _( 'Quarantine' ) );
+    my $theme     = Gtk3::IconTheme->new;
+    my $use_image = ClamTk::Icons->get_image( 'system-lock-screen' );
+    my $image     = Gtk3::Image->new_from_icon_name( $use_image, 'menu' );
+    my $button    = Gtk3::ToolButton->new( $image, _( 'Quarantine' ) );
     $button->set_is_important( TRUE );
     $hbox->insert( $button, -1 );
     $button->signal_connect( clicked => \&action, $tree );
 
-    $image  = Gtk3::Image->new_from_stock( 'gtk-delete', 'menu' );
-    $button = Gtk3::ToolButton->new( $image, _( 'Delete' ) );
+    $use_image = ClamTk::Icons->get_image( 'user-trash-full' );
+    $image     = Gtk3::Image->new_from_icon_name( $use_image, 'menu' );
+    $button    = Gtk3::ToolButton->new( $image, _( 'Delete' ) );
     $button->set_is_important( TRUE );
     $hbox->insert( $button, -1 );
     $button->signal_connect( clicked => \&action, $tree );
@@ -148,7 +151,8 @@ sub show_window {
     # Testing to see if we can add Analysis button.
     # See ClamTk::Analysis->button_test for more
     if ( ClamTk::Analysis->button_test ) {
-        $image  = Gtk3::Image->new_from_stock( 'gtk-find', 'menu' );
+        my $use_image = ClamTk::Icons->get_image( 'edit-find' );
+        $image  = Gtk3::Image->new_from_icon_name( $use_image, 'menu' );
         $button = Gtk3::ToolButton->new( $image, _( 'Analysis' ) );
         $button->set_is_important( TRUE );
         $hbox->insert( $button, -1 );
@@ -160,8 +164,9 @@ sub show_window {
     $sep->set_expand( TRUE );
     $hbox->insert( $sep, -1 );
 
-    $image  = Gtk3::Image->new_from_stock( 'gtk-close', 'menu' );
-    $button = Gtk3::ToolButton->new( $image, _( 'Close' ) );
+    $use_image = ClamTk::Icons->get_image( 'window-close' );
+    $image     = Gtk3::Image->new_from_icon_name( $use_image, 'menu' );
+    $button    = Gtk3::ToolButton->new( $image, _( 'Close' ) );
     $button->signal_connect(
         clicked => sub {
             $dialog->destroy;

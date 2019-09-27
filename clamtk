@@ -24,6 +24,7 @@ use ClamTk::App;
 use ClamTk::Assistant;
 use ClamTk::GUI;
 use ClamTk::History;
+use ClamTk::Icons;
 use ClamTk::Network;
 use ClamTk::Prefs;
 use ClamTk::Results;
@@ -43,7 +44,7 @@ textdomain( 'clamtk' );
 setlocale( LC_ALL, '' );
 bind_textdomain_codeset( 'clamtk', 'UTF-8' );
 
-my $arg = decode('utf8', $ARGV[0]);
+my $arg = decode( 'utf8', $ARGV[ 0 ] );
 #
 # Unfortunately, I don't know how to make python keep a
 # URI with spaces intact.  So....

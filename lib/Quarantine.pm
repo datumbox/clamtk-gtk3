@@ -79,8 +79,9 @@ sub show_window {
     $box->pack_start( $viewbar, FALSE, FALSE, 5 );
     $viewbar->set_style( 'both-horiz' );
 
-    my $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'edit-undo' );
+    my $button    = Gtk3::ToolButton->new();
+    my $use_image = ClamTk::Icons->get_image( 'edit-undo' );
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'Restore' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -91,8 +92,9 @@ sub show_window {
     $v_sep->set_expand( TRUE );
     $viewbar->insert( $v_sep, -1 );
 
-    $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'edit-delete' );
+    $button    = Gtk3::ToolButton->new();
+    $use_image = ClamTk::Icons->get_image( 'edit-delete' );
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'Delete' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );

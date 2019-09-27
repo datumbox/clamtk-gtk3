@@ -65,7 +65,8 @@ sub show_window {
     $bbox->set_show_arrow( FALSE );
 
     my $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'list-add' );
+    my $use_image = ClamTk::Icons->get_image('list-add');
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'Add a directory' ) );
     $bbox->insert( $button, -1 );
     $button->set_is_important( TRUE );
@@ -77,7 +78,8 @@ sub show_window {
     $bbox->insert( $sep, -1 );
 
     $button = Gtk3::ToolButton->new();
-    $button->set_icon_name( 'edit-delete' );
+    $use_image = ClamTk::Icons->get_image('list-remove');
+    $button->set_icon_name( $use_image );
     $button->set_label( _( 'Remove a directory' ) );
     $bbox->insert( $button, -1 );
     $button->set_is_important( TRUE );

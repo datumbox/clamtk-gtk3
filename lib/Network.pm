@@ -106,11 +106,13 @@ sub show_window {
         }
     );
 
-    my $apply_button = Gtk3::Button->new_from_icon_name( 'document-save', 0 );
+    my $use_image = ClamTk::Icons->get_image('document-save');
+    my $apply_button = Gtk3::Button->new_from_icon_name( $use_image, 0 );
     $apply_button->set_tooltip_text( _( 'Press Apply to save changes' ) );
     $grid->attach( $apply_button, 0, 6, 1, 1 );
 
-    $proxy_status_image = Gtk3::Button->new_from_icon_name( 'list-add', 0 );
+    $use_image = ClamTk::Icons->get_image('list-add');
+    $proxy_status_image = Gtk3::Button->new_from_icon_name( $use_image, 0 );
     $grid->attach( $proxy_status_image, 1, 6, 1, 1 );
 
     # What does the user have set?
@@ -255,13 +257,15 @@ sub proxy_non_block_status {
     my $status  = shift;
     my $message = '';
     if ( $status eq 'yes' ) {
-        my $btn = Gtk3::Button->new_from_icon_name( 'emblem-ok', 0 );
+        my $use_image = ClamTk::Icons->get_image('emblem-ok');
+        my $btn = Gtk3::Button->new_from_icon_name( $use_image, 0 );
         $btn->set_relief( 'none' );
         $proxy_status_image->set_image( $btn );
         $message = _( 'Settings saved' );
         $infobar->set_message_type( 'other' );
     } else {
-        my $btn = Gtk3::Button->new_from_icon_name( 'emblem-important', 0 );
+        my $use_image = ClamTk::Icons->get_image('emblem-important');
+        my $btn = Gtk3::Button->new_from_icon_name( $use_image, 0 );
         $btn->set_relief( 'none' );
         $proxy_status_image->set_image( $btn );
         $message = _( 'Error' );
