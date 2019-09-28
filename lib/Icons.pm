@@ -38,6 +38,7 @@ sub get_image() {
     $table{ 'emblem-ok' }                  = 'gtk-yes';
     $table{ 'folder-documents' }           = 'gtk-directory';
     $table{ 'go-previous' }                = 'gtk-go-back';
+    $table{ 'help-about' }                 = 'gtk-about';
     $table{ 'image-missing' }              = 'gtk-missing-image';
     $table{ 'list-add' }                   = 'gtk-add';
     $table{ 'list-remove' }                = 'gtk-remove';

@@ -165,7 +165,9 @@ sub filter {
     $box->pack_start( $bottombar, FALSE, FALSE, 5 );
 
     $bottombar->set_message_type( 'other' );
-    $use_image = ClamTk::Icons->get_image( 'process-stop' );
+    # Stupid infobars
+    # $use_image = ClamTk::Icons->get_image( 'gtk-cancel' );
+    $use_image = 'gtk-cancel';
     $bottombar->add_button( $use_image, HATE_GNOME_SHELL );
     if ( $show ) {
         $use_image = ClamTk::Icons->get_image( 'preferences-system' );
