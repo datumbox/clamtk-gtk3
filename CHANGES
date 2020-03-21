@@ -1,5 +1,11 @@
 CHANGELOG for ClamTk:
 
+6.03 - 20200321
+---------------
+    * Bug fix affecting manual updates
+    * Updated language files: English (en_UK), Indonesian (id),
+      Swedish (sv)
+
 6.02 - 20190919
 ---------------
     * Updated language files: Turkish (tr), Kazakh (kk), Swedish (sv),
