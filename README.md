@@ -1,6 +1,4 @@
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/clamtk/Lobby)
-
-This readme file was last updated on 23 March 2019
+This readme file was last updated on 22 March 2020.
 
 # Readme for ClamTk
 
@@ -21,7 +19,13 @@ This readme file was last updated on 23 March 2019
 
 ClamTk is a frontend for ClamAV (Clam Antivirus). It is intended to be an easy to use, light-weight, on-demand scanner for Linux systems. It has been ported to Fedora, Debian, RedHat, openSUSE, ALT Linux, Ubuntu, CentOS, Gentoo, Archlinux, Mandriva, PCLinuxOS, Frugalware, FreeBSD, and others.
 
-Although its earliest incarnations date to 2003, ClamTk was first uploaded for distribution in 2004 to a rootshell.be account and finally to Sourceforge.net in 2005. At the end of 2013, it was moved to a Google Code page (then to github), then gitlab and Bitbucket. It's now 2019 and for some reason, it's still going. In fact, February 2019 marks 15 years of activity (of being publically available, that is).
+Although its earliest incarnations date to 2003, ClamTk was first uploaded for distribution in 2004 to a rootshell.be account and finally to Sourceforge.net in 2005. At the end of 2013, it was moved to a Google Code page (then to github), then gitlab and Bitbucket. It's now 2020 and for some reason, it's still going. In fact, February 2020 marks 16 years of activity (of being publically available, that is).
+
+
+## Plans
+
+Version 7 will likely have a new design, and will almost certainly use a different language.  
+Also, clamtk-notify is in the works - a program that will watch a directory (or directories) for downloads and scan them automatically.  
 
 
 ### Important Links
@@ -35,26 +39,17 @@ http://clamtk.sourceforge.net (not used anymore)
 https://dave-theunsub.github.io/clamtk/ (deprecated)  
 https://github.com/dave-theunsub/clamtk/ (deprecated)  
 
-Launchpad ClamTk:  
-https://launchpad.net/clamtk
-
-ClamAV:  
-https://www.clamav.net
-
-Gtk2-Perl:  
-http://gtk2-perl.sourceforge.net
-
-Gtk3:  
-https://developer.gnome.org/gtk3/stable/index.html
-
-Virustotal:  
-https://virustotal.com
+[Launchpad ClamTk](https://launchpad.net/clamtk)  
+[ClamAV](https://www.clamav.net)  
+[Gtk2-Perl](http://gtk2-perl.sourceforge.net)  
+[Gtk3](https://developer.gnome.org/gtk3/stable/index.html)  
+[Virustotal](https://virustotal.com)  
 
 
 ## Installation  
 
 ### RPMs  
-The easiest way to install ClamTk is to use the rpms. Note: The `dnf` (which is now used by Fedora) command instructions are the same as the `yum` instructions below (just switch out `yum` for `dnf` if that's what your system is using):  
+The easiest way to install ClamTk is to use the rpms. The command `dnf` (which is now used by Fedora) uses the same instructions as `yum` below (just switch out `yum` for `dnf` if that's what your system is using):  
   
 First, try `yum install clamtk`. If this does not work,
 download it and try:  
@@ -109,29 +104,29 @@ While the Debian/Ubuntu .debs have always been digitally signed, the rpms have n
 
 1. Get and import the key in one step: `rpm --import https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`
 2. Verify the list of gpg keys installed in RPM DB: `rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'`
-3. Check the signature of the rpm. For this example, we'll use version 5.25: `rpm --checksig clamtk-5.25-1.fc.noarch.rpm`
-4. You should see something like this: `/home/you/clamtk-5.25-1.fc.noarch.rpm: rsa sha1 (md5) pgp md5 OK`
+3. Check the signature of the rpm. For this example, we'll use version 6.03: `rpm --checksig clamtk-6.03-1.fc.noarch.rpm`
+4. You should see something like this: `/home/you/clamtk-6.03-1.fc.noarch.rpm: rsa sha1 (md5) pgp md5 OK`
 
-You can also verify the tarball. Using 5.22 as the example version, ensure you have downloaded the tarball, its detached signature (.asc), and the key in step 1 above.
+You can also verify the tarball. Using 6.03 as the example version, ensure you have downloaded the tarball, its detached signature (.asc), and the key in step 1 above.
 
-1. Get the key (skip if you already have it): `wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`
-2. Import it (skip if you have done it already): `gpg --import RPM-GPG-KEY-DaveM-21-June-2018`
-3. Verify `gpg2 --verify clamtk-5.27.tar.xz.asc clamtk-5.27.tar.gz` or `gpg --verify clamtk-5.27.tar.gz.asc clamtk-5.27.tar.gz`
-4. You should see something like this: `gpg: Signature made Sun 11 Sep 2016 06:29:41 AM CDT using RSA key ID` (snipped for brevity)  
+1. Get the key (skip if you already have it): `wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`.
+2. Import it (skip if you have done it already): `gpg --import RPM-GPG-KEY-DaveM-21-June-2018`.
+3. Verify `gpg2 --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.gz` or `gpg --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.xz`.
+4. You should see something like this: `gpg: Signature made Sun 11 Sep 2016 06:29:41 AM CDT using RSA key ID` (snipped for brevity).  
 
-Guess what? You can always use minisign, too!  
-https://jedisct1.github.io/minisign/
+You can now use minisign, too!  
+[Minisign](https://jedisct1.github.io/minisign/)
 
 First, you'll need my public minisign key:  
-https://davem.fedorapeople.org/davemminisign.pub
+[Public minisign key](https://davem.fedorapeople.org/davemminisign.pub)
 
 Then, you'll need the minisig file for the program you're verifying.
 A link to it will be with the rest of the downloads. For this example:  
-https://bitbucket.org/davem_/clamtk-gtk3/downloads/clamtk-6.00.tar.xz.minisig
+https://bitbucket.org/davem_/clamtk-gtk3/downloads/clamtk-6.03.tar.xz.minisig
 
 Now, you can verify like so:  
 ```
-minisign -V -x clamtk-6.00.tar.xz.minisig -p davemminisign.pub -m clamtk-6.00.tar.xz
+minisign -V -x clamtk-6.03.tar.xz.minisig -p davemminisign.pub -m clamtk-6.03.tar.xz
 ```
 
 
@@ -223,14 +218,14 @@ https://gitlab.com/dave_m/nemo-sendto-clamtk
 
 ### Limitations/Bugs
 
-Probably a lot. Let me know, please. Ranting on some bulletin board somewhere on one of dozens of Linux sites will not improve things. See the section below for contact info.
+Probably a lot. Let me know, please. Ranting on some bulletin board somewhere on one of dozens of Linux sites will not fix bugs or improve the program. See the section below for contact info.
 
 
 ## Contributing
 
 ### Locale/Internationalization
 
-Version 2.20 is the first ClamTk version to offer this. Have time on your hands and want to contribute? See the Launchpad page at https://launchpad.net/clamtk
+ClamTk has supported multiple languages for many years now. Have time on your hands and want to contribute? See the [Launchpad page](https://launchpad.net/clamtk).
 
 Note that some builds do not account for other than English languages because they have not yet updated their build/spec files. A polite email to the respective maintainer may fix this.
 
@@ -247,7 +242,7 @@ ClamTk started out using the Tk libraries (thus its name). In 2005, this was cha
 
 The plan for the 5.xx series was to use Gtk3. Unfortunately, Debian and Ubuntu did not have a recent version of libgtk3-perl, and CentOS did not have perl-Gtk3. So, at the last second, the 5.00 version was rewritten to use Gtk2. Again.
 
-Version 6.xx has been written to use Gtk3, as Gtk2 is mostly deprecated. There's no new design this time, as this was an effort to ensure the Gtk3 version could be included in upcoming releases (such as with Debian). It is planned to put the 6.xx series in its own git repository, so that the older 5.xx series will still be there for distros that do not have Gtk3.
+Version 6.xx has been written to use Gtk3, as Gtk2 is deprecated. There's no new design this time, as this was an effort to ensure the Gtk3 version could be included in upcoming distribution releases (such as with Debian). The 6.xx series is in its own git repository (usually clamtk-gtk3), so that the older 5.xx series will still be there for distros that do not have Gtk3.
 
 Version 7.xx will likely have a new design, and may be written in a different language as well.
 
@@ -256,7 +251,7 @@ And there's also a Gtk4 in the works...
 
 ## Thank you
 
-Many people have contributed their time, energy, opinions, recommendations, and expertise to this software. I cannot thank them enough. Their names are listed in the [credits.md file](credits.md)
+Many people have contributed their time, energy, opinions, recommendations, and expertise to this software. I cannot thank them enough. Their names are listed in the [credits.md file](credits.md).
 
 Also a big thank you to:
 * Everyone who has contributed in one way or another to ClamTk - including language files, bug notifications, and feature requests
@@ -274,9 +269,7 @@ https://launchpad.net/clamtk
   
 While we recommend opening an official bug on the appropriate page, we'll also accept emails:  
 
-* Dave M, dave.nerd AT gmail (0x6ADA59DE)  
-* Tord D, tord.dellsen AT gmail  
+* Dave M, dave.nerd at gmail (0x6ADA59DE)  
+* Tord D, tord.dellsen at gmail  
 
-    <!-->
-~ You can also [chat with us on gitter](https://gitter.im/clamtk/Lobby)
--->
+[comment]: # the end
