@@ -1,4 +1,4 @@
-This readme file was last updated on 22 March 2020.
+This readme file was last updated on 26 March 2020.
 
 # Readme for ClamTk
 
@@ -25,6 +25,7 @@ Although its earliest incarnations date to 2003, ClamTk was first uploaded for d
 ## Plans
 
 Version 7 will likely have a new design, and will almost certainly use a different language.  
+
 Also, clamtk-notify is in the works - a program that will watch a directory (or directories) for downloads and scan them automatically.  
 
 
@@ -34,12 +35,12 @@ ClamTk:
 https://gitlab.com/dave_m/clamtk-gtk3/  
 https://bitbucket.org/davem_/clamtk-gtk3/  
 https://gitlab.com/dave_m/clamtk/wikis/home  
+https://launchpad.net/clamtk  
 https://code.google.com/p/clamtk/ (not used anymore)  
 http://clamtk.sourceforge.net (not used anymore)  
 https://dave-theunsub.github.io/clamtk/ (deprecated)  
 https://github.com/dave-theunsub/clamtk/ (deprecated)  
 
-[Launchpad ClamTk](https://launchpad.net/clamtk)  
 [ClamAV](https://www.clamav.net)  
 [Gtk2-Perl](http://gtk2-perl.sourceforge.net)  
 [Gtk3](https://developer.gnome.org/gtk3/stable/index.html)  
@@ -49,19 +50,26 @@ https://github.com/dave-theunsub/clamtk/ (deprecated)
 ## Installation  
 
 ### RPMs  
-The easiest way to install ClamTk is to use the rpms. The command `dnf` (which is now used by Fedora) uses the same instructions as `yum` below (just switch out `yum` for `dnf` if that's what your system is using):  
+The easiest way to install ClamTk is to use the rpms. The commands `dnf` and `yum` will pull in any requirements.   
   
-First, try `yum install clamtk`. If this does not work,
-download it and try:  
+First, start with the official repositories.
 
-`# yum install clamtk*.rpm`
+`sudo yum install clamtk` or `sudo dnf install clamtk`.  
+
+If this does not work, download the file from [the official site](https://gitlab.com/dave_m/clamtk/-/wikis/Home). 
+
+From a terminal window:  
+
+`sudo yum install clamtk*.rpm` or `sudo dnf install clamtk*.rpm`
 
 To remove clamtk:  
   
-`# yum erase clamtk`
+`sudo yum erase clamtk` or `sudo dnf erase clamtk`.
 
-### Source
-Warning: Don't do this. It's much easier to just double-click a .deb or .rpm. Really, put down the source. The tarball contains all the sources. One way to do this on Fedora:  
+### Source  
+**Warning**: Don't do this. It's much easier to just double-click a .deb or .rpm. Really, put down the source. 
+
+The tarball contains all the sources. One way to do this, as tested on Fedora, is to run the following commands:  
 
 ```
 mkdir -p /usr/share/perl5/vendor_perl/ClamTk  
@@ -86,13 +94,13 @@ or
 
 You should be able to just double-click the .deb file to install it. This assumes you have permissions to install programs, of course. Your package manager should grab any necessary dependencies.
 
-By the commandline, you can do this:  
+From the commandline, you can do this:  
 
-    # apt install clamtk-*.deb
+    sudo apt install clamtk-*.deb
 
 To remove clamtk:  
 
-    # dpkg --purge clamtk
+    sudo dpkg --purge clamtk
 
 Note that the Debian/Ubuntu builds are and have always been gpg-signed.
 
@@ -102,29 +110,41 @@ It is recommended you install ClamTk from official repositories. Check your dist
 
 While the Debian/Ubuntu .debs have always been digitally signed, the rpms have not. Beginning with 5.22, you can once again check the rpm's signature to verify its integrity. Here's one way:
 
-1. Get and import the key in one step: `rpm --import https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`
-2. Verify the list of gpg keys installed in RPM DB: `rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'`
-3. Check the signature of the rpm. For this example, we'll use version 6.03: `rpm --checksig clamtk-6.03-1.fc.noarch.rpm`
-4. You should see something like this: `/home/you/clamtk-6.03-1.fc.noarch.rpm: rsa sha1 (md5) pgp md5 OK`
+1. Get and import the key in one step:  
+`rpm --import https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`  
+2. Verify the list of gpg keys installed in RPM DB:  
+`rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'`  
+3. Check the signature of the rpm. For this example, we'll use version 6.03:  
+`rpm --checksig clamtk-6.03-1.fc.noarch.rpm`  
+4. You should see something like this:  
+`/home/you/clamtk-6.03-1.fc.noarch.rpm: rsa sha1 (md5) pgp md5 OK`
 
 You can also verify the tarball. Using 6.03 as the example version, ensure you have downloaded the tarball, its detached signature (.asc), and the key in step 1 above.
 
-1. Get the key (skip if you already have it): `wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`.
-2. Import it (skip if you have done it already): `gpg --import RPM-GPG-KEY-DaveM-21-June-2018`.
-3. Verify `gpg2 --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.gz` or `gpg --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.xz`.
-4. You should see something like this: `gpg: Signature made Sun 11 Sep 2016 06:29:41 AM CDT using RSA key ID` (snipped for brevity).  
+1. Get the key (skip this step if you already have it):  
+`wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`.
+2. Import it (skip this step if you have done it already):  
+`gpg --import RPM-GPG-KEY-DaveM-21-June-2018`.
+3. Verify like so:  
+`gpg2 --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.gz` or  
+`gpg --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.xz`.
+4. You should see something like this:  
+`gpg: Signature made Sun 11 Sep 2016 06:29:41 AM CDT using RSA key ID` (snipped for brevity).  
 
 You can now use minisign, too!  
-[Minisign](https://jedisct1.github.io/minisign/)
+[Minisign](https://jedisct1.github.io/minisign/)  
 
-First, you'll need my public minisign key:  
-[Public minisign key](https://davem.fedorapeople.org/davemminisign.pub)
+First, you will need my public minisign key:  
+[Public minisign key](https://davem.fedorapeople.org/davemminisign.pub)  
 
-Then, you'll need the minisig file for the program you're verifying.
-A link to it will be with the rest of the downloads. For this example:  
+Then, you will need the minisig file for the program you are verifying.  
+
+A link to it will be with the rest of the downloads. 
+
+For this example:  
 https://bitbucket.org/davem_/clamtk-gtk3/downloads/clamtk-6.03.tar.xz.minisig
 
-Now, you can verify like so:  
+Now, you verify like so:  
 ```
 minisign -V -x clamtk-6.03.tar.xz.minisig -p davemminisign.pub -m clamtk-6.03.tar.xz
 ```
@@ -134,21 +154,21 @@ minisign -V -x clamtk-6.03.tar.xz.minisig -p davemminisign.pub -m clamtk-6.03.ta
 
 ### Running ClamTk
 
-* Beginning with version 4.23, ClamTk will automatically search for signatures if you do not have them set already. This way ClamTk should work right out of the box, with no prompting.
+* Beginning with version 4.23, ClamTk will automatically search for signatures if you do not have them set already. This way ClamTk should work right out of the box, with no prompting.  
 * Consider the extra scanning options in Settings.
-  * Select "Scan files beginning with a dot (.*)" to scan those files beginning with a ".".  These are sometimes referred to as "hidden" files.
-  * Select "Scan directories recursively" to scan all files and directories within a directory.
-  * The "Scan for PUAs" option enables the ability to scan for Potentially Unwanted Applications as well as broken executables.  Note that this can result in what may be false positives.
-  * By default, ClamTk will avoid scanning files larger than 20MB. To force scanning of these files, check the "Scan files larger than 20 MB" box.
-  * You can also check for updates upon startup.  This requires an active Internet connection.
-* Information on items quarantined is available under the "Quarantine" option.  If you believe there is a false positive contained, you can easily move it back to your home directory. You may also delete this file(s). Note that there is no recycle bin - once deleted, they are gone forever.
+  * Select "Scan files beginning with a dot (.*)" to scan those files beginning with a ".".  These are sometimes referred to as "hidden" files.  
+  * Select "Scan directories recursively" to scan all files and directories within a directory.  
+  * The "Scan for PUAs" option enables the ability to scan for Potentially Unwanted Applications as well as broken executables.  Note that this can result in what may be false positives.  
+  * By default, ClamTk will avoid scanning files larger than 20MB. To force scanning of these files, check the "Scan files larger than 20 MB" box.  
+  * You can also check for updates upon startup.  This requires an active Internet connection.  
+* Information on items quarantined is available under the "Quarantine" option.  If you believe there is a false positive contained, you can easily move it back to your home directory. You may also delete this file(s). *Note that there is no recycle bin - once deleted, they are gone forever.*    
 * Scan a file or directory by right-clicking on it within the file manager (e.g., Nautilus).  This functionality requires an extra package (clamtk-gnome).
-* You can STOP the scan by clicking the Cancel button. Note that due to the speed of the scanning, it may not stop immediately; it will continue scanning and displaying files it has already "read" until the stop catches up.
-* View previous scans by selecting "History".
-* The Update Assistant is necessary because some systems are set up to do automatic updates, while others must manually update them.
-* If you require specific proxy settings, select "Network".
-* As of version 5.xx, you can use the "Analysis" button to see if a particular file is considered malicious by other antivirus products. This uses results from Virustotal. If you desire, you can submit a file for further review. Please do *not* submit personal files.
-* The "Whitelist" option provides the ability to skip specific directories during scan time. For example, you may wish to skip directories containing music or videos.
+* You can STOP the scan by clicking the Cancel button. Note that due to the speed of the scanning, it may not stop immediately; it will continue scanning and displaying files it has already "read" until the stop catches up.  
+* View previous scans by selecting "History".  
+* The Update Assistant is necessary because some systems are set up to do automatic updates, while others must manually update them.  
+* If you require specific proxy settings, select "Network".  
+* As of version 5.xx, you can use the "Analysis" button to see if a particular file is considered malicious by other antivirus products. This uses results from Virustotal. If you desire, you can submit a file for further review. Please do *not* submit personal files.  
+* The "Whitelist" option provides the ability to skip specific directories during scan time. For example, you may wish to skip directories containing music or videos.  
 
 ### Commandline
 
@@ -161,17 +181,17 @@ or
 clamtk directory_to_be_scanned  
 ```
   
-However, the main reason for the commandline option (though basic) is to allow for right-click scanning within your file manager (e.g., Nautilus or Dolphin).  If you want more extensive commandline options, it is recommended that you use the clamscan binary itself. (Type `man clamscan` at the commandline.) Or, if you know of something useful, let me know and I can add it as an option.
+However, the main reason for the commandline option (though basic) is to allow for right-click scanning within your file manager (e.g., Files, Caja, or Dolphin).  If you require more extensive commandline options, it is recommended that you use the clamscan executable itself. (Type `man clamscan` at the commandline.)  
 
 ### Afterwards
 
-You can view and delete scan logs by selecting the "History" option.
+You can view and delete scan logs by selecting the "History" option.  
 
-You also have a few options with the files displayed. Click on the file scanned to select it, then right-click: you should have four options there.
+You also have a few options with the files displayed. Click on the file scanned to select it, then right-click: you should have four options there.  
 
-* Quarantine this file: This drops the selected file into a "quarantined" folder with the executable bit removed. The quarantine folder is held in the user's ClamTk folder (`~/.clamtk/viruses`).
-* Delete this file: Be careful: There's no recycle bin!
-* Cancel: Cancels this menu.
+* Quarantine this file: This drops the selected file into a "quarantined" folder with the executable bit removed. The quarantine folder is held in the user's ClamTk folder (`~/.clamtk/viruses`).  
+* Delete this file: Be careful: There's no recycle bin!  
+* Cancel: Cancels this menu.  
 
 ### Quarantine/Maintenance
 
@@ -187,10 +207,13 @@ Here are the specific pages:
   
 For Gnome (Files file manager):  
 https://gitlab.com/dave_m/clamtk-gnome  
+
 For KDE (Dolphin file manager):  
 https://gitlab.com/dave_m/clamtk-kde  
+
 For XFCE (Thunar file manager):  
 https://gitlab.com/dave_m/thunar-sendto-clamtk  
+
 For MATE (Nemo file manager):  
 https://gitlab.com/dave_m/nemo-sendto-clamtk  
   
@@ -210,7 +233,7 @@ https://gitlab.com/dave_m/nemo-sendto-clamtk
 
 * Are you using the source and you see something like this: Can't locate Foo/Bar.pm in @INC... (etc, etc).
 
-  This means you are missing some of the dependencies. Try to find the dependency through your distribution's repositories, or simply go to http://search.cpan.org. Always try your distribution's repo first. It's more than likely your distribution already packages these for easy installation. Depending on your distro, you will likely use "yum" or "apt" or some "Update Manager" and the like.
+  This means you are missing some of the dependencies. Try to find the dependency through your distribution's repositories, or simply go to [CPAN](https://metacpan.org/). Always try your distribution's repository first. It is more than likely your distribution already packages these for easy installation. Depending on your distro, you will likely use `yum`, `dnf`, `apt` or some "Update Manager" and the like.
 
 * I can't right click on files/directories to scan anymore!
 
@@ -234,7 +257,7 @@ Note that some builds do not account for other than English languages because th
 
 As of version 3.10, ClamTk will not scan standard mail directories, such as .evolution, .mozilla or .thunderbird. This is due to parsing problems. If a smart way of doing that comes up, it will be added.
 
-Also, please note that version numbers mean absolutely nothing. There is no rhyme or reason to odd or even numbers (i.e., an odd number does not mean "unstable"). A new version means it goes up 1 (or, rather, .01). Version 6.xx, still in development, will likely use the Gtk3 libraries.
+Also, please note that version numbers mean absolutely nothing. There is no rhyme or reason to odd or even numbers (i.e., an odd number does not mean "unstable"). A new version means it goes up 1 (or, rather, .01).  
 
 ### GUI
 
@@ -251,13 +274,13 @@ And there's also a Gtk4 in the works...
 
 ## Thank you
 
-Many people have contributed their time, energy, opinions, recommendations, and expertise to this software. I cannot thank them enough. Their names are listed in the [credits.md file](credits.md).
+Many people have contributed their time, energy, opinions, recommendations, and expertise to this software. I cannot thank them enough. Their names are listed in the credits file.
 
 Also a big thank you to:
 * Everyone who has contributed in one way or another to ClamTk - including language files, bug notifications, and feature requests
 * Dag, without whom rpms would likely not exist
 * All the gtk2-perl and gtk3-perl folks for their time and effort
-* Perlmonks.org for helping me learn the wonderful Perl language - and continuing to do so on a daily basis!
+* [Perlmonks](https://perlmonks.org), for helping me learn the wonderful Perl language - and continuing to do so on a daily basis!
 
 
 ## Contact
@@ -271,5 +294,3 @@ While we recommend opening an official bug on the appropriate page, we'll also a
 
 * Dave M, dave.nerd at gmail (0x6ADA59DE)  
 * Tord D, tord.dellsen at gmail  
-
-[comment]: # the end
