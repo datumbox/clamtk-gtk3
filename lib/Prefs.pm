@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -126,6 +126,9 @@ sub structure {
         close( $F );
     }
 
+    # Automatically set local freshclam.conf for individual updates
+    set_local_config();
+
     return 1;
 }
 
@@ -179,7 +182,7 @@ sub custom_prefs {
     # Recursive: Scan all files/directories within a directory
     # Mounted: Scan gvfs and related directories
     for my $o (
-        qw{ScanHidden SizeLimit
+        qw{ScanHidden SizeLimit Heuristic
         Thorough Recursive Mounted}
         )
     {
@@ -226,7 +229,7 @@ sub get_all_prefs {
 sub legit_key {
     # Sanity check the prefs file's keys.
     my @keys = qw(
-        SizeLimit HTTPProxy
+        SizeLimit HTTPProxy Heuristic
         LastInfection GUICheck DupeDB
         TruncateLog SaveToLog
         Whitelist Update ScanHidden
@@ -318,8 +321,7 @@ sub set_proxy {
     my $path = ClamTk::App->get_path( 'db' );
 
     # This gets clobbered every time.
-    # Doesn't need to be utf-8 friendly. I think.
-    open( my $FH, '>', "$path/local.conf" )
+    open( my $FH, '>:encoding(UTF-8)', "$path/local.conf" )
         or return -1;
     print $FH <<"EOF";
 HTTPProxyServer $ip
@@ -329,6 +331,29 @@ DatabaseMirror database.clamav.net
 EOF
     close( $FH )
         or warn "Couldn't close $path/local.conf: $!\n";
+    return 1;
+}
+
+sub set_local_config {
+    my $path = ClamTk::App->get_path( 'db' );
+    if ( -e "$path/freshclam.conf" ) {
+        return;
+    }
+
+    # This gets clobbered every time.
+    open( my $FH, '>:encoding(UTF-8)', "$path/freshclam.conf" )
+        or return -1;
+    print $FH <<"EOF";
+# Local config
+DatabaseMirror database.clamav.net
+LogSyslog no
+EOF
+    close( $FH )
+        or warn "Couldn't close $path/freshclam.conf: $!\n";
+    if ( !-e "$path/freshclam.conf" ) {
+        warn "Couldn't create local freshclam.conf!\n"
+            . "You will be unable to do manual updates.\n";
+    }
     return 1;
 }
 

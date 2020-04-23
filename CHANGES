@@ -1,11 +1,13 @@
 CHANGELOG for ClamTk:
 
-6.03 - 20200322
+6.03 - 20200423
 ---------------
     * Bug fix affecting manual updates
     * Update year (2019 -> 2020)
+    * Clean up man page.
+    * Heuristic scanning made an option rather than a default
     * Fix icon mismatch in the Scheduler
-    * Fix icon glitch in Update using old icon name 
+    * Fix icon glitch in Update
     * Updated language files: English (en_UK), Indonesian (id),
       Swedish (sv) (Launchpad #1688469)
 

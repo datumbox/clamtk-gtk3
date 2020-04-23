@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -74,20 +74,33 @@ sub show_window {
     $viewbar->set_style( 'both-horiz' );
 
     my $button = Gtk3::ToolButton->new();
-    my $use_image = ClamTk::Icons->get_image('text-x-preview');
+    # my $use_image = ClamTk::Icons->get_image('text-x-preview');
+    my $use_image = ClamTk::Icons->get_image( 'document-new' );
     $button->set_icon_name( $use_image );
     $button->set_label( _( 'View' ) );
     $viewbar->insert( $button, -1 );
     $button->set_is_important( TRUE );
     $button->signal_connect( clicked => \&view_history, $view );
 
+    $button    = Gtk3::ToolButton->new();
+    $use_image = ClamTk::Icons->get_image( 'document-print' );
+    $button->set_icon_name( $use_image );
+    $button->set_label( _( 'Print' ) );
+    $viewbar->insert( $button, -1 );
+    $button->set_is_important( TRUE );
+    $button->signal_connect(
+        clicked => sub {
+            my $p = Gtk3::PrintOperation->new();
+        }
+    );
+
     my $v_sep = Gtk3::SeparatorToolItem->new;
     $v_sep->set_draw( FALSE );
     $v_sep->set_expand( TRUE );
     $viewbar->insert( $v_sep, -1 );
 
-    $button = Gtk3::ToolButton->new();
-    $use_image = ClamTk::Icons->get_image('edit-delete');
+    $button    = Gtk3::ToolButton->new();
+    $use_image = ClamTk::Icons->get_image( 'edit-delete' );
     $button->set_icon_name( $use_image );
     $button->set_label( _( 'Delete' ) );
     $viewbar->insert( $button, -1 );
@@ -191,7 +204,7 @@ sub view_history {
     $viewbar->insert( $v_sep, -1 );
 
     my $close_btn = Gtk3::ToolButton->new();
-    my $use_image = ClamTk::Icons->get_image('window-close');
+    my $use_image = ClamTk::Icons->get_image( 'window-close' );
     $close_btn->set_icon_name( $use_image );
     $close_btn->set_label( _( 'Close' ) );
     $close_btn->set_is_important( TRUE );

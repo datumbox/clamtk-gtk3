@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -28,7 +28,7 @@ use open ':encoding(utf8)';
 
 # This should be under /usr/bin, but we'll check anyway.
 my $cmd
-    = ( -e '/usr/bin/crontab' ) ? '/usr/bin/crontab'
+    = ( -e '/usr/bin/crontab' )       ? '/usr/bin/crontab'
     : ( -e '/usr/local/bin/crontab' ) ? '/usr/local/bin/crontab'
     : ( -e '/bin/crontab' )           ? '/bin/crontab'
     :                                   '';
@@ -189,7 +189,7 @@ sub show_window {
         : TRUE;
 
     $defs_apply_btn = Gtk3::ToolButton->new();
-    $defs_apply_btn->set_icon_name( 'emblem-new' );
+    $defs_apply_btn->set_icon_name( 'list-add' );
     $defs_apply_btn->set_label( _( 'Close' ) );
     if ( $can_update ) {
         $defs_bar->insert( $defs_apply_btn, -1 );

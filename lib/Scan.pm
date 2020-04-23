@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -292,7 +292,7 @@ sub filter {
             $directive
                 .= ' --detect-pua --alert-broken'
                 . ' --alert-macros --alert-encrypted-archive'
-                . ' --alert-encrypted-doc --heuristic-alerts';
+                . ' --alert-encrypted-doc';
         } else {
             $directive .= ' --detect-pua --algorithmic-detection';
         }
@@ -301,12 +301,19 @@ sub filter {
             || ( $version cmp '101' ) == 1 )
         {
             $directive
-                =~ s/\s--detect-pua --alert-broken --alert-macros --alert-encrypted-archive --alert-encrypted-doc --heuristic-alerts'//;
+                =~ s/\s--detect-pua --alert-broken --alert-macros --alert-encrypted-archive --alert-encrypted-doc'//;
         } else {
             $directive =~ s/\s--detect-pua --algorithmic-detection//;
         }
     }
-    # print "directive = >", $directive, "<\n";
+
+    # remove the hidden files if chosen:
+    if ( $prefs{ Heuristic } ) {
+        # By default, if included, == yes
+        $directive .= ' --heuristic-alerts=yes';
+    } else {
+        $directive .= ' --heuristic-alerts=no';
+    }
 
     # only a single file
 

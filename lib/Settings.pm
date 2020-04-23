@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -53,11 +53,26 @@ sub show_window {
         }
     );
 
+    $option
+        = Gtk3::CheckButton->new_with_label( _( 'Use heuristic scanning' ) );
+    # $option->set_tooltip_text(
+    #     _( 'tooltip here' ) );
+    $option->set_active( TRUE ) if ( $prefs{ Heuristic } );
+    $grid->attach( $option, 0, 1, 1, 1 );
+    $option->signal_connect(
+        toggled => sub {
+            my $btn = shift;
+            ClamTk::Prefs->set_preference( 'Heuristic', $btn->get_active
+                ? 1
+                : 0 );
+        }
+    );
+
     $option = Gtk3::CheckButton->new_with_label(
         _( 'Scan files beginning with a dot (.*)' ) );
     $option->set_tooltip_text( _( 'Scan files typically hidden from view' ) );
     $option->set_active( TRUE ) if ( $prefs{ ScanHidden } );
-    $grid->attach( $option, 0, 1, 1, 1 );
+    $grid->attach( $option, 0, 2, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -72,7 +87,7 @@ sub show_window {
     $option->set_tooltip_text(
         _( 'Scan large files which are typically not examined' ) );
     $option->set_active( TRUE ) if ( $prefs{ SizeLimit } );
-    $grid->attach( $option, 0, 2, 1, 1 );
+    $grid->attach( $option, 0, 3, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -87,7 +102,7 @@ sub show_window {
     $option->set_tooltip_text(
         _( 'Scan all files and directories within a directory' ) );
     $option->set_active( TRUE ) if ( $prefs{ Recursive } );
-    $grid->attach( $option, 0, 3, 1, 1 );
+    $grid->attach( $option, 0, 4, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;
@@ -102,7 +117,7 @@ sub show_window {
     $option->set_tooltip_text(
         _( 'Check online for application and signature updates' ) );
     $option->set_active( TRUE ) if ( $prefs{ GUICheck } );
-    $grid->attach( $option, 0, 4, 1, 1 );
+    $grid->attach( $option, 0, 5, 1, 1 );
     $option->signal_connect(
         toggled => sub {
             my $btn = shift;

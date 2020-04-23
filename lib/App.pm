@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -25,7 +25,7 @@ use Encode 'decode';
 
 sub get_TK_version {
     # Stick with %.2f format - 4.50 vice 4.5
-    return '6.02';
+    return '6.03';
 }
 
 sub get_path {
@@ -87,14 +87,14 @@ sub get_path {
 
     # Most times freshclam is under /usr/bin
     $path->{ freshclam }
-        = ( -e '/usr/bin/freshclam' ) ? '/usr/bin/freshclam'
+        = ( -e '/usr/bin/freshclam' )       ? '/usr/bin/freshclam'
         : ( -e '/usr/local/bin/freshclam' ) ? '/usr/local/bin/freshclam'
         : ( -e '/opt/local/bin/freshclam' ) ? '/opt/local/bin/freshclam'
         :                                     '';
 
     # Use sigtool for db info
     $path->{ sigtool }
-        = ( -e '/usr/bin/sigtool' ) ? '/usr/bin/sigtool'
+        = ( -e '/usr/bin/sigtool' )       ? '/usr/bin/sigtool'
         : ( -e '/usr/local/bin/sigtool' ) ? '/usr/local/bin/sigtool'
         : ( -e '/opt/local/bin/sigtool' ) ? '/opt/local/bin/sigtool'
         :                                   '';
@@ -103,7 +103,7 @@ sub get_path {
     # We'll use clampath as the actual path
     # and clamscan as clampath + scan options
     $path->{ clampath }
-        = ( -e '/usr/bin/clamscan' ) ? '/usr/bin/clamscan'
+        = ( -e '/usr/bin/clamscan' )       ? '/usr/bin/clamscan'
         : ( -e '/usr/local/bin/clamscan' ) ? '/usr/local/bin/clamscan'
         : ( -e '/opt/local/bin/clamscan' ) ? '/opt/local/bin/clamscan'
         :                                    '';

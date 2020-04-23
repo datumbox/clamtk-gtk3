@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -64,8 +64,8 @@ sub show_window {
     $bbox->set_style( 'both-horiz' );
     $bbox->set_show_arrow( FALSE );
 
-    my $button = Gtk3::ToolButton->new();
-    my $use_image = ClamTk::Icons->get_image('list-add');
+    my $button    = Gtk3::ToolButton->new();
+    my $use_image = ClamTk::Icons->get_image( 'list-add' );
     $button->set_icon_name( $use_image );
     $button->set_label( _( 'Add a directory' ) );
     $bbox->insert( $button, -1 );
@@ -77,8 +77,8 @@ sub show_window {
     $sep->set_expand( TRUE );
     $bbox->insert( $sep, -1 );
 
-    $button = Gtk3::ToolButton->new();
-    $use_image = ClamTk::Icons->get_image('list-remove');
+    $button    = Gtk3::ToolButton->new();
+    $use_image = ClamTk::Icons->get_image( 'list-remove' );
     $button->set_icon_name( $use_image );
     $button->set_label( _( 'Remove a directory' ) );
     $bbox->insert( $button, -1 );

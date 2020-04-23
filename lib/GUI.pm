@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -28,17 +28,17 @@ my $infobar;
 my $top_box;
 my $box;
 
-sub start_gui {
-    # Some themes don't have all the "standard" gnome icons, so
-    # clamtk will crash if they're not there.  This is a patch from
-    # Arch Linux, which may solve the issue - or at least stop dying
-    # because it's missing an icon :|
-    # https://aur.archlinux.org/packages/clamtk/
-    my $theme = Gtk3::IconTheme::get_default;
-    $theme->append_search_path( '/usr/share/icons/gnome/24x24/actions' );
-    $theme->append_search_path( '/usr/share/icons/gnome/24x24/places' );
-    $theme->append_search_path( '/usr/share/icons/gnome/24x24/mimetypes' );
+# Some themes don't have all the "standard" gnome icons, so
+# clamtk will crash if they're not there.  This is a patch from
+# Arch Linux, which may solve the issue - or at least stop dying
+# because it's missing an icon :|
+# https://aur.archlinux.org/packages/clamtk/
+my $theme = Gtk3::IconTheme::get_default;
+$theme->append_search_path( '/usr/share/icons/gnome/24x24/actions' );
+$theme->append_search_path( '/usr/share/icons/gnome/24x24/places' );
+$theme->append_search_path( '/usr/share/icons/gnome/24x24/mimetypes' );
 
+sub start_gui {
     $window = Gtk3::Window->new( 'toplevel' );
     $window->signal_connect(
         destroy => sub {
@@ -76,7 +76,7 @@ sub start_gui {
     $hb->pack_end( $separator );
 
     my $button = Gtk3::Button->new_from_icon_name( 'help-about', 2 );
-    $button->set_can_focus(FALSE);
+    $button->set_can_focus( FALSE );
     $hb->pack_end( $button );
     $button->set_tooltip_text( _( 'About' ) );
     $button->signal_connect( 'clicked', sub { about() } );
@@ -237,11 +237,11 @@ sub add_config_panels {
     );
 
     #<<<
-    my $theme = Gtk3::IconTheme->new;
+    # my $theme = Gtk3::IconTheme->new;
     for my $item ( @data ) {
         my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme::get_default->load_icon(
+        my $pix = $theme->load_icon(
             $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -305,11 +305,11 @@ sub add_update_panels {
     );
 
     #<<<
-    my $theme = Gtk3::IconTheme->new;
+    # my $theme = Gtk3::IconTheme->new;
     for my $item ( @data ) {
         my $use_image = ClamTk::Icons->get_image($item->{image});
         my $iter = $liststore->append;
-        my $pix = Gtk3::IconTheme::get_default->load_icon(
+        my $pix = $theme->load_icon(
             $use_image, 24, 'use-builtin'
         );
         $liststore->set( $iter,
@@ -509,7 +509,7 @@ sub press {
     my ( $path, $store ) = @_;
     return unless ( $path );
 
-    my $iter = $store->get_iter( $path );
+    my $iter  = $store->get_iter( $path );
     my $value = $store->get_value( $iter, 1 );
 
     iconview_react( $value );
@@ -519,7 +519,7 @@ sub click {
     my ( $view, $path, $model ) = @_;
     $view->unselect_all;
 
-    my $iter = $model->get_iter( $path );
+    my $iter  = $model->get_iter( $path );
     my $value = $model->get_value( $iter, 1 );
 
     iconview_react( $value );
@@ -711,7 +711,7 @@ sub about {
     $dialog->set_logo( $pixbuf );
     $dialog->set_translator_credits(
         'Please see the credits.md for full listing' );
-    $dialog->set_copyright( "\x{a9} Dave M 2004 - 2019" );
+    $dialog->set_copyright( "\x{a9} Dave M 2004 - 2020" );
     $dialog->set_program_name( 'ClamTk' );
     $dialog->set_authors( [ 'Dave M', 'dave.nerd@gmail.com' ] );
     $dialog->set_comments(

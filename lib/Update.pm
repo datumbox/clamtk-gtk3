@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -100,23 +100,22 @@ sub show_window {
 
     my $text = '';
     if ( ClamTk::Prefs->get_preference( 'Update' ) eq 'shared' ) {
-        $text = _( 'You are configured to automatically receive updates' );
+        my $label = Gtk3::Label->new;
+        $label->set_text(
+            _( 'You are configured to automatically receive updates' ) );
+        $infobar->get_content_area()->add( $label );
     } else {
         $text = _( 'Check for updates' );
-        my $use_image = ClamTk::Icons->get_image( 'emblem-ok' );
-        $infobar->add_button( $use_image, -5 );
-    }
+        $infobar->add_button( $text, -5 );
 
-    my $label = Gtk3::Label->new;
-    $label->set_text( $text );
-    $infobar->get_content_area()->add( $label );
-    #<<<
-    $infobar->signal_connect(
-        response => sub {
-                update_signatures();
-        }
-    );
-    #>>>
+        #<<<
+        $infobar->signal_connect(
+            response => sub {
+                    update_signatures();
+            }
+        );
+        #>>>
+    }
 
     $box->pack_start( Gtk3::VBox->new, TRUE, TRUE, 5 );
 
@@ -155,6 +154,12 @@ sub update_signatures {
     $pb->set_text( _( 'Please wait...' ) );
 
     my $freshclam = get_freshclam_path();
+    if ( ClamTk::Prefs->get_preference( 'Update' ) eq 'single' ) {
+        my $dbpath = ClamTk::App->get_path( 'db' ) . '/' . 'freshclam.conf';
+        if ( -e $dbpath ) {
+            $freshclam .= " --config-file=$dbpath";
+        }
+    }
 
     # The mirrors can be slow sometimes and may return/die
     # 'failed' despite that the update is still in progress.
@@ -169,6 +174,7 @@ sub update_signatures {
             = sub { die "failed updating signatures (timeout)\n" };
         alarm 100;
 
+        warn "about to run\n";
         $update_sig_pid = open( $update, '-|', "$freshclam --stdout" );
         defined( $update_sig_pid ) or do {
             set_infobar_text( 'error',
@@ -176,6 +182,7 @@ sub update_signatures {
             return 0;
         };
         alarm 0;
+        warn "after alarm and launch\n";
     };
     if ( $@ && $@ eq "failed\n" ) {
         set_infobar_text( 'error', _( 'Error updating: try again later' ) );
@@ -189,6 +196,7 @@ sub update_signatures {
     # speaking users. So, we'll grab the first couple words
     # and try to sum it up.
 
+    warn "running parser\n";
     while ( defined( my $line = <$update> ) ) {
         Gtk3::main_iteration while Gtk3::events_pending;
         $pb->set_text( _( 'Downloading...' ) );

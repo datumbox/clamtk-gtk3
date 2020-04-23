@@ -1,4 +1,4 @@
-# ClamTk, copyright (C) 2004-2019 Dave M
+# ClamTk, copyright (C) 2004-2020 Dave M
 #
 # This file is part of ClamTk
 # (https://gitlab.com/dave_m/clamtk-gtk3/).
@@ -18,15 +18,18 @@ package ClamTk::Icons;
 
 sub get_image() {
     my ( $self, $wanted ) = @_;
-    # warn "wanted: >$wanted<\n";
 
     my $use_image = '';
 
     my %table;
 
     # These need to be scrubbed again
+    # The gtk-apply in the left column is because it works and
+    # the newer names (e.g., emblem-ok) don't.
+    $table{ 'system-run' }                 = 'gtk-apply';
     $table{ 'alarm' }                      = 'gtk-properties';
     $table{ 'document-new' }               = 'gtk-file';
+    $table{ 'document-print' }             = 'gtk-print';
     $table{ 'document-save' }              = 'gtk-apply';
     $table{ 'document-save-as' }           = 'gtk-save-as';
     $table{ 'document-send' }              = 'gtk-index';
@@ -35,13 +38,13 @@ sub get_image() {
     $table{ 'edit-select' }                = 'gtk-find';
     $table{ 'edit-undo' }                  = 'gtk-undelete';
     $table{ 'emblem-important' }           = 'gtk-no';
-    $table{ 'emblem-ok' }                  = 'gtk-yes';
     $table{ 'folder-documents' }           = 'gtk-directory';
     $table{ 'go-previous' }                = 'gtk-go-back';
     $table{ 'help-about' }                 = 'gtk-about';
     $table{ 'image-missing' }              = 'gtk-missing-image';
     $table{ 'list-add' }                   = 'gtk-add';
     $table{ 'list-remove' }                = 'gtk-remove';
+    $table{ 'media-playback-start' }       = 'gtk-yes';
     $table{ 'preferences-system' }         = 'gtk-preferences';
     $table{ 'preferences-system-network' } = 'gtk-network';
     $table{ 'process-stop' }               = 'gtk-cancel';
