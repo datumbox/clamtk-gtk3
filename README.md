@@ -1,4 +1,4 @@
-This readme file was last updated on 26 March 2020.
+This readme file was last updated on 16 May 2020.
 
 # Readme for ClamTk
 
@@ -17,17 +17,14 @@ This readme file was last updated on 26 March 2020.
 
 ## About
 
-ClamTk is a frontend for ClamAV (Clam Antivirus). It is intended to be an easy to use, light-weight, on-demand scanner for Linux systems. It has been ported to Fedora, Debian, RedHat, openSUSE, ALT Linux, Ubuntu, CentOS, Gentoo, Archlinux, Mandriva, PCLinuxOS, Frugalware, FreeBSD, and others.
+ClamTk is a frontend for ClamAV (Clam Antivirus). It is intended to be an easy to use, light-weight, on-demand scanner for Linux systems. Ease of use includes easy to install; that is, dependencies should be included in most repositories.
 
-Although its earliest incarnations date to 2003, ClamTk was first uploaded for distribution in 2004 to a rootshell.be account and finally to Sourceforge.net in 2005. At the end of 2013, it was moved to a Google Code page (then to github), then gitlab and Bitbucket. It's now 2020 and for some reason, it's still going. In fact, February 2020 marks 16 years of activity (of being publically available, that is).
+Although its earliest incarnations date to 2003, ClamTk was first uploaded for distribution in 2004 to a rootshell.be account and finally to Sourceforge.net in 2005. At the end of 2013, it was moved to a Google Code page (then to Github), then Gitlab and Bitbucket. It is now 2020 and for some reason, development is still going. In fact, February 2020 marks 16 years of activity (of being publicly available, that is).
 
 
 ## Plans
 
 Version 7 will likely have a new design, and will almost certainly use a different language.  
-
-Also, clamtk-notify is in the works - a program that will watch a directory (or directories) for downloads and scan them automatically.  
-
 
 ### Important Links
 
@@ -50,24 +47,26 @@ https://github.com/dave-theunsub/clamtk/ (deprecated)
 ## Installation  
 
 ### RPMs  
-The easiest way to install ClamTk is to use the rpms. The commands `dnf` and `yum` will pull in any requirements.   
+The easiest way to install ClamTk is to use the rpms. The commands `dnf` and `yum` will pull in requirements.   
   
 First, start with the official repositories.
 
 `sudo yum install clamtk` or `sudo dnf install clamtk`.  
 
-If this does not work, download the file from [the official site](https://gitlab.com/dave_m/clamtk/-/wikis/Home). 
+If this does not work, download the file from [the official site](https://gitlab.com/dave_m/clamtk/-/wikis/Home). You should be able to just double click the file for installation or upgrade.
 
-From a terminal window:  
+For these examples, we will use version 6.03. The name of the file may differ based on your distribution.
 
-`sudo yum install clamtk*.rpm` or `sudo dnf install clamtk*.rpm`
+To install using a terminal window:  
+
+`sudo yum install clamtk-6.03-1.el8.noarch.rpm` or `sudo dnf install clamtk-6.03-1.fc.noarch.rpm`
 
 To remove clamtk:  
   
 `sudo yum erase clamtk` or `sudo dnf erase clamtk`.
 
 ### Source  
-**Warning**: Don't do this. It's much easier to just double-click a .deb or .rpm. Really, put down the source. 
+**Warning**: Don't do this. It's much easier to just double click a .deb or .rpm. Really, put down the source. 
 
 The tarball contains all the sources. One way to do this, as tested on Fedora, is to run the following commands:  
 
@@ -92,17 +91,21 @@ or
 
 ### DEBs
 
-You should be able to just double-click the .deb file to install it. This assumes you have permissions to install programs, of course. Your package manager should grab any necessary dependencies.
+You should be able to just double click the .deb file to install it. Your package manager should retrieve any necessary dependencies.
 
 From the commandline, you can do this:  
 
-    sudo apt install clamtk-*.deb
+    `sudo apt install clamtk`
+
+If you downloaded the file, then use this:
+
+    `sudo apt install clamtk_6.03-1_all.deb`
 
 To remove clamtk:  
 
     sudo dpkg --purge clamtk
 
-Note that the Debian/Ubuntu builds are and have always been gpg-signed.
+Note that the Debian/Ubuntu builds are and always have been gpg-signed.
 
 ### Integrity
 
@@ -122,12 +125,12 @@ While the Debian/Ubuntu .debs have always been digitally signed, the rpms have n
 You can also verify the tarball. Using 6.03 as the example version, ensure you have downloaded the tarball, its detached signature (.asc), and the key in step 1 above.
 
 1. Get the key (skip this step if you already have it):  
-`wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`.
+`wget https://davem.fedorapeople.org/RPM-GPG-KEY-DaveM-21-June-2018`  
 2. Import it (skip this step if you have done it already):  
-`gpg --import RPM-GPG-KEY-DaveM-21-June-2018`.
+`gpg --import RPM-GPG-KEY-DaveM-21-June-2018`  
 3. Verify like so:  
 `gpg2 --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.gz` or  
-`gpg --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.xz`.
+`gpg --verify clamtk-6.03.tar.xz.asc clamtk-6.03.tar.xz`  
 4. You should see something like this:  
 `gpg: Signature made Sun 11 Sep 2016 06:29:41 AM CDT using RSA key ID` (snipped for brevity).  
 
@@ -181,7 +184,7 @@ or
 clamtk directory_to_be_scanned  
 ```
   
-However, the main reason for the commandline option (though basic) is to allow for right-click scanning within your file manager (e.g., Files, Caja, or Dolphin).  If you require more extensive commandline options, it is recommended that you use the clamscan executable itself. (Type `man clamscan` at the commandline.)  
+The main reason for the commandline option (however basic) is to allow for right-click scanning within your file manager (e.g., Files, Caja, or Dolphin).  If you require more extensive commandline options, it is recommended that you use the clamscan executable itself. (Type `man clamscan` at the commandline.)  
 
 ### Afterwards
 
@@ -190,7 +193,7 @@ You can view and delete scan logs by selecting the "History" option.
 You also have a few options with the files displayed. Click on the file scanned to select it, then right-click: you should have four options there.  
 
 * Quarantine this file: This drops the selected file into a "quarantined" folder with the executable bit removed. The quarantine folder is held in the user's ClamTk folder (`~/.clamtk/viruses`).  
-* Delete this file: Be careful: There's no recycle bin!  
+* Delete this file: Be careful: There is no recycle bin!  
 * Cancel: Cancels this menu.  
 
 ### Quarantine/Maintenance
@@ -201,6 +204,7 @@ If you've quarantined files for later examination, you have the option to restor
 ## Plugins
 
 To add a right-click, context menu ability to send files and directories to the scanner, install the appropriate plugin. Links to the latest versions are available here:  
+
 https://gitlab.com/dave_m/clamtk/wikis/Downloads  
   
 Here are the specific pages:  
@@ -214,7 +218,7 @@ https://gitlab.com/dave_m/clamtk-kde
 For XFCE (Thunar file manager):  
 https://gitlab.com/dave_m/thunar-sendto-clamtk  
 
-For MATE (Nemo file manager):  
+For Mate (Nemo file manager):  
 https://gitlab.com/dave_m/nemo-sendto-clamtk  
   
 
@@ -265,7 +269,7 @@ ClamTk started out using the Tk libraries (thus its name). In 2005, this was cha
 
 The plan for the 5.xx series was to use Gtk3. Unfortunately, Debian and Ubuntu did not have a recent version of libgtk3-perl, and CentOS did not have perl-Gtk3. So, at the last second, the 5.00 version was rewritten to use Gtk2. Again.
 
-Version 6.xx has been written to use Gtk3, as Gtk2 is deprecated. There's no new design this time, as this was an effort to ensure the Gtk3 version could be included in upcoming distribution releases (such as with Debian). The 6.xx series is in its own git repository (usually clamtk-gtk3), so that the older 5.xx series will still be there for distros that do not have Gtk3.
+Version 6.xx has been written to use Gtk3, as Gtk2 is deprecated. There's no new design this time, as this was an effort to ensure the Gtk3 version could be included in upcoming distribution releases (such as with Debian). The 6.xx series is in its own git repository (usually clamtk-gtk3), so that the older 5.xx series will still be there for distributions that do not have Gtk3.
 
 Version 7.xx will likely have a new design, and may be written in a different language as well.
 
@@ -285,12 +289,12 @@ Also a big thank you to:
 
 ## Contact
 
-For feature requests or bugs, it's best to use one of the following:  
+For feature requests or bugs, it is best to use one of the following:  
 
 https://gitlab.com/dave_m/clamtk/issues  
 https://launchpad.net/clamtk  
   
-While we recommend opening an official bug on the appropriate page, we'll also accept emails:  
+While we recommend opening an official bug on the appropriate page, we will also accept email.   
 
-* Dave M, dave.nerd at gmail (0x6ADA59DE)  
-* Tord D, tord.dellsen at gmail  
+* Dave M, dave.nerd at gmail.com (0x6ADA59DE)  
+* Tord D, tord.dellsen at gmail.com  
